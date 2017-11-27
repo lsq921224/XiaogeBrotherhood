@@ -13,7 +13,7 @@ public class ConnectingGraph3 {
     public ConnectingGraph3(int n) {
         // initialize your data structure here.
         father = new int[n + 1];
-        count = n;
+        count = n;//use case
         for (int i = 1; i <= n; ++i) {
             father[i] = i;
         }

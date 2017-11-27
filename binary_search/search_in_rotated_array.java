@@ -14,6 +14,7 @@ public class Solution {
         if (nums[mid] == target) return mid;
         if (nums[left] < nums[mid]) {
           if (nums[left] <= target && nums[mid] > target) { //eqaul sign here is necessary
+            // the reason is it's using left to compare with target, so left cannot be changed if its target.
             right = mid;
           } else {
             left = mid;

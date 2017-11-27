@@ -20,21 +20,34 @@ public class Solution {
                 }
             }
         }
-        int compressed_find(int x){
-            int parent =  father.get(x);
-            while(parent!=father.get(parent)) {
-                parent = father.get(parent);
-            }
-            int temp = -1;
-            int fa = x;
-            while(fa!=father.get(fa)) {
-                temp = father.get(fa);
-                father.put(fa, parent) ;
-                fa = temp;
-            }
-            return parent;
-
+        //recursively
+        int compressed_find(int x) {
+          if(x != father.get(x)) {
+            int tmp = compressed_find(father.get(x));
+            father.put(x, tmp);
+            return tmp;
+          } else {
+            return x;
+          }
         }
+
+        //iteratively
+
+        // int compressed_find(int x){
+        //     int parent =  father.get(x);
+        //     while(parent!=father.get(parent)) {
+        //         parent = father.get(parent);
+        //     }
+        //     int temp = -1;
+        //     int fa = x;
+        //     while(fa!=father.get(fa)) {
+        //         temp = father.get(fa);
+        //         father.put(fa, parent) ;
+        //         fa = temp;
+        //     }
+        //     return parent;
+        //
+        // }
 
         void union(int x, int y){
             int fa_x = compressed_find(x);
@@ -63,7 +76,7 @@ public class Solution {
             int x = operators[i].x;
             int y = operators[i].y;
             if(island[x][y] != 1) {
-                count ++;
+                count ++;//use of case
                 island[x][y]  = 1;
                 int id = converttoId(x,y , m);
                 for(int j = 0 ; j < 4; j++) {
