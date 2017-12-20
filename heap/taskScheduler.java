@@ -33,7 +33,7 @@ public class Solution {
                     else
                         queue.poll();
                 }
-                time++;
+                time++; // has to be in the front if condition to be able to handle 'idle' case
                 if (queue.isEmpty() && temp.size() == 0)
                     break;
                 i++;
