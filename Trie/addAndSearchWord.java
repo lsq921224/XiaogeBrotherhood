@@ -217,3 +217,27 @@ public class WordDictionary {
 // WordDictionary wordDictionary = new WordDictionary();
 // wordDictionary.addWord("word");
 // wordDictionary.search("pattern");
+
+
+//12/20 version
+public boolean search(String word) {
+        return dfs(word, 0, root);
+}
+private boolean dfs(String word, int idx, TrieNode parent) { //The TrieNode here is Parent Node
+    if (idx == word.length()) {//since it's parent node so idx cannot be len - 1
+        return parent.isLeaf;
+    }
+    if (word.charAt(idx) == '.') {
+        for (TrieNode curr : parent.map.values()) {
+            boolean res = dfs(word, idx + 1, curr);
+            if (res) return true;
+        }
+    } else {
+        if (parent.map.containsKey(word.charAt(idx))) {
+            return dfs(word, idx + 1, parent.map.get(word.charAt(idx)));
+        }
+    }
+    return false;
+}
+
+//what if the regex allow *
