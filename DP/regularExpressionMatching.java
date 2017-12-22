@@ -56,4 +56,39 @@ class Solution {
         }
         return dp[0][0];
     }
+
+
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    //Follow up  what if * is allowed, then more conditions are below
+    public boolean search(String word) {
+            return dfs(word, root);
+    }
+    private boolean dfs(String word, TrieNode parent) { //The TrieNode here is Parent Node
+        if (word.length() == 0) {//since it's parent node so idx cannot be len - 1
+            return parent.isLeaf;
+        }
+        boolean firstMatch = word.length() > 0 && (parent.map.containsKey(word.charAt(0)) || word.charAt(0) == '.');
+        if (word.length() > 1 && word.charAt(1) == '*') {
+            if(word.charAt(0) == '.') {
+                boolean tmp = false;
+                for (TrieNode curr : parent.map.values()) {
+                    tmp = tmp || firstMatch && dfs(word, curr);
+                }
+                return tmp || firstMatch && dfs(word.substring(2), parent); //match || no match
+            } else {
+                System.out.println("Hi");
+                return firstMatch && (dfs(word, parent.map.get(word.charAt(0))) || dfs(word.substring(2), parent.map.get(word.charAt(0))));
+            }
+        } else {
+            if (word.charAt(0) == '.') {
+                boolean tmp = false;
+                for (TrieNode curr : parent.map.values()) {
+                    tmp = tmp || firstMatch && dfs(word.substring(1), curr);
+                }
+                return tmp;
+            } else {
+                return firstMatch && dfs(word.substring(1), parent.map.get(word.charAt(0)));
+            }
+        }
+    }
 }
