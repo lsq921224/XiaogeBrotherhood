@@ -241,3 +241,75 @@ private boolean dfs(String word, int idx, TrieNode parent) { //The TrieNode here
 }
 
 //what if the regex allow *
+class WordDictionary {
+    TrieNode root;
+    class TrieNode {
+        Map<Character, TrieNode> map;
+        boolean isLeaf;
+        //char val; TrieNode does not need val
+        public TrieNode() {
+            map = new HashMap<Character, TrieNode>();
+            isLeaf = false;
+        }
+    }
+
+    /** Initialize your data structure here. */
+    public WordDictionary() {
+        root = new TrieNode();
+    }
+
+    /** Adds a word into the data structure. */
+    public void addWord(String word) {
+        char[] wordChars = word.toCharArray();
+        TrieNode curr = root;
+        for (char c : wordChars) {
+            if(curr.map.containsKey(c)) {
+                curr = curr.map.get(c);
+            } else {
+                TrieNode newNode = new TrieNode();
+                curr.map.put(c, newNode);
+                curr = newNode;
+            }
+        }
+        curr.isLeaf = true;
+    }
+
+    /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    public boolean search(String word) {
+            return dfs(word, root);
+    }
+    private boolean dfs(String word, TrieNode parent) { //The TrieNode here is Parent Node
+        if (word.length() == 0) {//since it's parent node so idx cannot be len - 1
+            return parent.isLeaf;
+        }
+        boolean firstMatch = word.length() > 0 && (parent.map.containsKey(word.charAt(0)) || word.charAt(0) == '.');
+        if (word.length() > 1 && word.charAt(1) == '*') {
+            if(word.charAt(0) == '.') {
+                boolean tmp = false;
+                for (TrieNode curr : parent.map.values()) {
+                    tmp = tmp || firstMatch && dfs(word, curr);
+                }
+                return tmp || firstMatch && dfs(word.substring(2), parent); //match || no match
+            } else {
+                return firstMatch && (dfs(word, parent.map.get(word.charAt(0))) || dfs(word.substring(2), parent.map.get(word.charAt(0))));
+            }
+        } else {
+            if (word.charAt(0) == '.') {
+                boolean tmp = false;
+                for (TrieNode curr : parent.map.values()) {
+                    tmp = tmp || firstMatch && dfs(word.substring(1), curr);
+                }
+                return tmp;
+            } else {
+                return firstMatch && dfs(word.substring(1), parent.map.get(word.charAt(0)));
+            }
+        }
+    }
+}
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary obj = new WordDictionary();
+ * obj.addWord(word);
+ * boolean param_2 = obj.search(word);
+ */
