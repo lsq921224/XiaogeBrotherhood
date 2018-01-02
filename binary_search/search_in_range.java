@@ -26,7 +26,7 @@ public class Solution {
         }
         else if (A.get(right) == target) {
             rightbound = right;
-        }
+        }// this is actually leftbound
 
         left = 0;
         right = A.size() -1;
@@ -46,7 +46,7 @@ public class Solution {
         }
         else if (A.get(left) == target) {
             leftbound = left;
-        }
+        }//rightbound
 
 
         res.add(rightbound);
