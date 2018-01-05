@@ -28,13 +28,45 @@ class Solution {
   public boolean isValidBST(TreeNode root) {
       return helper(root, null,null);
   }
+  // not so good solution
   public boolean helper(TreeNode root, Integer start, Integer end){
       if(root==null) return true;
       boolean left = helper(root.left,start,root.val);
       boolean right = helper(root.right,root.val, end);
       return (start==null || start<root.val) &&
-        (end==null || end>root.val) && 
+        (end==null || end>root.val) &&
         left &&
         right;
+  }
+  //think in another way
+  public boolean isValidBST(TreeNode root) {
+      if (root == null) return true;
+      if (root.left == null && root.right == null) return true;
+      if (root.left != null && root.right == null) return root.left.val < root.val;
+      if (root.right != null && root.left == null) return root.right.val > root.val;
+      return isValidBST(root.left) && isValidBST(root.right);
+  }
+
+  public boolean isValidBST(TreeNode root) {
+     if (root == null) return true;
+     Stack<TreeNode> stack = new Stack<>();
+     TreeNode pre = null;
+     TreeNode p = root;
+     while(!stack.isEmpty() || p != null) {
+         if(p != null) {
+             stack.push(p);
+             // preorder do something here
+             p = p.left;
+         } else {
+             p = stack.pop();// better to overwrite p;
+
+             if(pre != null && p.val <= pre.val) return false;
+             // find kth smallest is if(--k == 0) break;
+             // In-order traversal is doing add here
+             pre = p;
+             p = p.right;
+         }
+     }
+     return true;
   }
 }
