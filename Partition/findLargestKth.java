@@ -36,7 +36,7 @@ public class Solution {
             while(i<j && nums[i]<pivot){
                 i++;
             }
-            while(i<j && nums[j]>=pivot){
+            while(i<j && nums[j]>=pivot){// has to be equal because pivot is on end
                 j--;
             }
             if(i==j) break;
@@ -78,11 +78,14 @@ public int kthLargestElement(int k, int[] nums) {
         }
         // System.out.println(left + " " + right);
         // figure out which range we should keep looking at
-        if (k <= right) {
+
+        if (k <= right) { // the equal is neccessary because the `start>=end return nums[end]`
             return quickSelect(nums, start, right, k);
+
         // reduce branch to save time
         // } else if (k > right && k <= left) {
         //     return quickSelect(nums, right + 1, left, k);
+
         } else {
             return quickSelect(nums, right + 1, end, k);
         }
