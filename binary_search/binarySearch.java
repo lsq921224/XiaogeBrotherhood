@@ -12,9 +12,37 @@ public class binarySearch {
         return ans;
     }
 
+    //another way to find the firstGreaterEqual
+    public int search2(int[] A, int target) {
+        int l = 0, r = A.length-1, ans = 0;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (target <= A[mid]) {
+                r = mid;
+            }  else
+                l = mid + 1;
+        }
+        return l;
+    }
+
+    //the way to find firstGreater
+    public int search3(int[] A, int target) {
+        int l = 0, r = A.length-1, ans = 0;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (target < A[mid]) {
+                r = mid;
+            }  else
+                l = mid + 1;
+        }
+        return l;
+    }
+    //cannot do mid - 1 and mid, which gonna be infinite loop
+    //
+
     public static void main(String[] args) {
         binarySearch bs = new binarySearch();
-        int[] arr = new int[]{1,2,2,2,2,3};
-        System.out.println(bs.search(arr, 2));
+        int[] arr = new int[]{1, 2, 2, 2, 4, 5};
+        System.out.println(bs.search3(arr, 3));
     }
 }
