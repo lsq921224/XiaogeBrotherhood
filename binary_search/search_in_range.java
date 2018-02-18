@@ -82,4 +82,18 @@ public class Solution {
       }
       return low;
   }
+
+  private static int firstGreater(int[] A, int target) {
+      int low = 0, high = A.length;
+      while (low < high) {
+          int mid = low + ((high - low) >> 1);
+          //low <= mid < high
+          if (A[mid] <= target) {
+              low = mid + 1;
+          } else {
+              high = mid;
+          }
+      }
+      return low;
+  }
 }
