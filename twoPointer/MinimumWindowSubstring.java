@@ -1,3 +1,5 @@
+// Template to sovle most substring window problem
+//https://leetcode.com/problems/minimum-window-substring/discuss/26808/Here-is-a-10-line-template-that-can-solve-most-'substring'-problems
 class Solution {
     public String minWindow(String s, String t) {
         int[] A = new int[256];
@@ -17,7 +19,7 @@ class Solution {
                     res = s.substring(i, j);
                 }
             }
-            A[s.charAt(i)]--;
+            A[s.charAt(i)]--;// after the loop you have to deal with the counter
         }
         return res;
     }
