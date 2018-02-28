@@ -6,7 +6,7 @@ public class Solution {
 
         Map<String, Set<String>> map = new HashMap<>();
         for (String path : paths) {
-            String[] strs = path.split("\\\\s+");
+            String[] strs = path.split("\\s+");
             for (int i = 1; i < strs.length; i++) {
                 int idx = strs[i].indexOf("(");
                 String content = strs[i].substring(idx);
