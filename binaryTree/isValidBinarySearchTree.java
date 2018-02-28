@@ -38,14 +38,6 @@ class Solution {
         left &&
         right;
   }
-  //think in another way
-  public boolean isValidBST(TreeNode root) {
-      if (root == null) return true;
-      if (root.left == null && root.right == null) return true;
-      if (root.left != null && root.right == null) return root.left.val < root.val;
-      if (root.right != null && root.left == null) return root.right.val > root.val;
-      return isValidBST(root.left) && isValidBST(root.right);
-  }
 
   public boolean isValidBST(TreeNode root) {
      if (root == null) return true;
