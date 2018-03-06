@@ -1,4 +1,26 @@
 public class Solution {
+
+    //One direction
+public int findLengthOfLCIS(int[] nums) {
+    if (nums.length == 0) return 0;
+    int res = 1;
+    int lastIndex = 0;
+    int last = nums[0];
+    for (int i = 1; i < nums.length; i++) {
+        if (nums[i] <= last) {
+            lastIndex = i;
+        } else {
+            res = Math.max(i - lastIndex + 1, res);
+        }
+        last = nums[i];
+    }
+    return res;
+}
+
+
+
+    //The following is for both directions
+
     public int longestIncreasingContinuousSubsequence(int[] A) {
         if (A == null || A.length == 0) {
             return 0;
