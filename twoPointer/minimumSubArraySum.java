@@ -1,4 +1,5 @@
-// 给定一个由 n 个正整数组成的数组和一个正整数 s ，请找出该数组中满足其和 ≥ s 的最小长度子数组。如果无解，则返回 -1。
+    // 给定一个由 n 个正整数组成的数组和一个正整数 s ，请找出该数组中满足其和 ≥ s 的最小长度子数组。如果无解，则返回 -1。
+    // while 都是更大的数 出了lengthOfLongestSubstringKDistinct比较特殊之外
 public class Solution {
     /**
      * @param nums: an array of integers
