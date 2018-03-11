@@ -17,10 +17,31 @@ public class Solution {
                     dp[i][j] = dp[(i-1)][j];
                 }
                 else{
+                    //比较难理解， 但想dp[i-1][j]并没有放石头，而是j表示包有多大,其value并没有增加
                     dp[i][j] = Math.max(dp[(i-1)][j], dp[(i-1)][j-A[i-1]] + V[i-1]);
                 }
             }
         }
         return dp[A.length][m];
+    }
+    //solution 2
+    public class Solution {
+        /**
+         * @param m: An integer m denotes the size of a backpack
+         * @param A & V: Given n items with size A[i] and value V[i]
+         */
+        public int backPackII(int m, int[] A, int V[]) {
+            // write your code here
+            int[] f = new int[m+1];
+            for (int i = 0; i <=m ; ++i) f[i] = 0;
+            int n = A.length , i, j;
+            for(i = 0; i < n; i++){
+                for(j = m; j >= A[i]; j--){
+                    if (f[j] < f[j - A[i]] + V[i])
+                        f[j] = f[j - A[i]] + V[i];
+                }
+            }
+            return f[m];
+        }
     }
 }

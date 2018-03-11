@@ -1,4 +1,5 @@
 Solution {
+    //O(N^2)
     public int longestIncreasingSubsequence(int[] nums) {
         int []f = new int[nums.length];
         int max = 0;
