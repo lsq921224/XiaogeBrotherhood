@@ -1,29 +1,38 @@
-private int quickSelect(int[] nums, int start, int end, int k) {
-    // System.out.println(start + " " + end + " " + k);
-    if(start >= end) return nums[end];
-    int left = start, right = end;
-    int pivot = nums[(start + end) / 2];
-    while (left <= right) {
-        while(left <= right && nums[left] < pivot) left++;
-        while(left <= right && nums[right] > pivot) right--;
-        if (left <= right) {
-            // swap
-            int temp = nums[left];
-            nums[left] = nums[right];
-            nums[right] = temp;
-            // check boundry for special case, can keep in both quick sort or quick select
-            if (left < end) left++;
-            if (right > start) right--;
+class QuickSelect {
+    public int quickSelect(int[] array, int k) {
+        return helper(array, 0, array.length - 1, k);
+    }
+
+    private int helper(int[] array, int start, int end, int k) {
+        if (start >= end) {
+            return array[start];
         }
-    } 
-    // System.out.println(left + " " + right);
-    // figure out which range we should keep looking at
-    if (k <= right) {
-        return quickSelect(nums, start, right, k);
-    // reduce branch to save time
-    // } else if (k > right && k <= left) {
-    //     return quickSelect(nums, right + 1, left, k);
-    } else {
-        return quickSelect(nums, right + 1, end, k);
+        int pivot = array[end];
+        int i = start;
+        int j = end;
+        while(true) {
+            while(i < j && array[i] < pivot) i++;
+            while(i < j && array[j] >= pivot) j--;
+            if (i == j) break;
+            swap(array, i, j);
+        }
+        swap(array, i, end);
+        if (i < k) return helper(array, i + 1, end, k);
+        else if (i > k) return helper(array, start, i - 1, k);// have to use i -1 instead of i
+        else return array[k];
+    }
+
+    private void swap(int[] A, int i, int j) {
+        int tmp = A[i];
+        A[i] = A[j];
+        A[j] = tmp;
+    }
+
+    public static void main(String args[]) {
+        int[] A = {6,4,7,9,1,2,0,5,3,8, 8, 8, 8};
+        for (int i = 0; i < 13; i++) {
+            int test = new QuickSelect().quickSelect(A, i);
+            System.out.println(test);
+        }
     }
 }
