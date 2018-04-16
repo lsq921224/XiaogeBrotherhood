@@ -53,14 +53,13 @@ public class Solution {
     public int []dy = {0, 1, 0, -1};
 
     public void search(char[][] board, int x, int y, TrieNode root, List<String> ans) {
+        if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y]==0 || root == null) return ;
         if(root.isString == true)
         {
             if(!ans.contains(root.s)){
                 ans.add(root.s);
             }
         }
-        if(x < 0 || x >= board.length || y < 0 || y >= board[0].length || board[x][y]==0 || root == null)
-            return ;
         if(root.subtree.containsKey(board[x][y])){
             for(int i = 0; i < 4; i++){
                 char now = board[x][y];
