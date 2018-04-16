@@ -43,6 +43,6 @@ public class binarySearch {
     public static void main(String[] args) {
         binarySearch bs = new binarySearch();
         int[] arr = new int[]{1, 2, 2, 2, 4, 5};
-        System.out.println(bs.search3(arr, 3));
+        System.out.println(bs.search3(arr, 2));
     }
 }

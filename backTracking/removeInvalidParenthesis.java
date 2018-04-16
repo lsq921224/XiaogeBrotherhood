@@ -44,4 +44,43 @@ class Solution {
         }
         return stack.empty();
     }
+
+
+    //dfs method, choose or not choose dfs
+    public List<String> removeInvalidParentheses(String s) {
+        int leftCount = 0;
+        int rightCount = 0;
+        int openCount = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if ( c == '(') leftCount++;
+            if ( c == ')') {
+                if (leftCount > 0) leftCount--;
+                else rightCount++;
+            }
+        }
+        Set<String> res = new HashSet<>();
+        dfs(s, leftCount, rightCount, 0, 0, new StringBuilder(), res);
+        return new ArrayList<String>(res);
+    }
+
+    //openCount is for the case ')()', in this case rightCount = 1, so you can remove one rightCount, which could lead to ')('
+    private void dfs(String s, int leftCount, int rightCount, int openCount, int index, StringBuilder sb, Set<String> res) {
+        if (index == s.length()) {
+            if (leftCount == 0 && rightCount == 0 && openCount == 0) res.add(sb.toString());
+            return;
+        }
+        if (leftCount < 0 || rightCount < 0 || openCount < 0) return;
+        int len = sb.length();
+        if (s.charAt(index) == '(') {
+            dfs(s, leftCount - 1, rightCount, openCount, index + 1, sb, res);
+            dfs(s, leftCount, rightCount, openCount + 1, index + 1, sb.append('('), res);
+        } else if (s.charAt(index) == ')') {
+            dfs(s, leftCount, rightCount - 1, openCount, index + 1, sb, res);
+            dfs(s, leftCount, rightCount, openCount - 1, index + 1, sb.append(')'), res);
+        } else {
+            dfs(s, leftCount, rightCount, openCount, index + 1, sb.append(s.charAt(index)), res);
+        }
+        sb.setLength(len);
+    }
 }

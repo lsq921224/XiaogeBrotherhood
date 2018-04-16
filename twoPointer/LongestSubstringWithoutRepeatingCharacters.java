@@ -4,6 +4,8 @@ public class Solution {
      * @return: an integer
      */
      //方法一：
+
+     //此题两种解法 也可以用hash求解
     public int lengthOfLongestSubstring(String s) {
         int[] map = new int[256]; // map from character's ASCII to its last occured index
 
