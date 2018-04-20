@@ -29,7 +29,7 @@ public class Solution {
             for (Integer neighbor : graph.get(node)) {
                 if (hash.contains(neighbor)) {
                     continue;
-                }
+                }// has to continue, for parent node
                 hash.add(neighbor);
                 queue.offer(neighbor);
             }
@@ -55,6 +55,54 @@ public class Solution {
     }
 }
 
+//version 3 dfs
+public class Solution {
+    public boolean validTree(int n, int[][] edges) {
+        // initialize adjacency list
+        List<List<Integer>> adjList = new ArrayList<List<Integer>>(n);
+
+        // initialize vertices
+        for (int i = 0; i < n; i++)
+            adjList.add(i, new ArrayList<Integer>());
+
+        // add edges
+        for (int i = 0; i < edges.length; i++) {
+            int u = edges[i][0], v = edges[i][1];
+            adjList.get(u).add(v);
+            adjList.get(v).add(u);
+        }
+
+        boolean[] visited = new boolean[n];
+
+        // make sure there's no cycle
+        if (hasCycle(adjList, 0, visited, -1))
+            return false;
+
+        // make sure all vertices are connected
+        for (int i = 0; i < n; i++) {
+            if (!visited[i])
+                return false;
+        }
+
+        return true;
+    }
+
+    // check if an undirected graph has cycle started from vertex u
+    // Have to check parent
+    boolean hasCycle(List<List<Integer>> adjList, int u, boolean[] visited, int parent) {
+        visited[u] = true;
+
+        for (int i = 0; i < adjList.get(u).size(); i++) {
+            int v = adjList.get(u).get(i);
+
+            if ((visited[v] && parent != v) || (!visited[v] && hasCycle(adjList, v, visited, u)))
+                return true;
+        }
+
+        return false;
+    }
+}
+
 
 // version 2: Union Find
 public class Solution {
@@ -67,6 +115,7 @@ public class Solution {
         }
         int compressed_find(int x){
             int parent =  father.get(x);
+            // find parent first
             while(parent!=father.get(parent)) {
                 parent = father.get(parent);
             }
@@ -79,6 +128,13 @@ public class Solution {
             }
             return parent;
 
+        }
+
+        int compressed_find__recursive(int x) {
+            if (x =  father.get(x)) return x;
+            int res = compressed_find(father.get(x));
+            father.put(x, res);
+            return res;
         }
 
         void union(int x, int y){
@@ -109,4 +165,36 @@ public class Solution {
         }
         return true;
     }
+
+
+    //Array union find
+  public boolean validTree(int n, int[][] edges) {
+      // write your code here
+      father = new int[n];
+      if (n != edges.length + 1) return false;
+      for (int j = 0; j < n; j++) {
+          father[j] = j;
+      }
+      for (int i = 0; i < edges.length; i++) {
+          if (find(edges[i][0]) == find(edges[i][1])) return false;
+          union(edges[i][0], edges[i][1]);
+      }
+      return true;
+    }
+
+  public int find(int x) {
+      if (father[x] == x) {
+       return x;
+      }
+      return father[x] = find(father[x]);
+    }
+
+
+  public void union(int a, int b) {
+    int root_a = find(a);
+    int root_b = find(b);
+    if (root_a != root_b) {
+      father[root_a] = root_b;
+    }
+  }
 }
