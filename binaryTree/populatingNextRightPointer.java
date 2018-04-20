@@ -1,6 +1,7 @@
 // https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/description/
 public class Solution {
     //O(n) space
+    //when it's not perfect tree
     public void connect(TreeLinkNode root) {
         if (root == null) return;
         Queue<TreeLinkNode> queue = new LinkedList<>();
@@ -38,4 +39,5 @@ public class Solution {
             level = head.next;
         }
     }
+
 }
