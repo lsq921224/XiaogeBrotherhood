@@ -64,4 +64,35 @@ public class Solution {
         }
         return res[ed%2];
     }
+
+// https://leetcode.com/problems/house-robber-iii/description/
+//House Robber 3
+// It will automatically contact the police if two directly-linked houses were broken into on the same night.
+// Determine the maximum amount of money the thief can rob tonight without alerting the police.
+// Example 2:
+//      3
+//     / \
+//    4   5
+//   / \   \
+//  1   3   1
+// Maximum amount of money the thief can rob = 4 + 5 = 9.
+
+
+public class Solution {
+    public int rob(TreeNode root) {
+        if(root == null) return 0;
+        if(root.left == null && root.right == null) return root.val;
+        int leftLvl = 0, rightLvl = 0;
+        int subleftLvl = 0, subrightLvl = 0;
+        if(root.left != null){
+            leftLvl = rob(root.left);
+            subleftLvl = rob(root.left.left) + rob(root.left.right);
+        }
+        if(root.right != null){
+            rightLvl = rob(root.right);
+            subrightLvl = rob(root.right.left) + rob(root.right.right);
+        }
+        return Math.max(subleftLvl + subrightLvl + root.val, leftLvl + rightLvl);
+    }
+}
 }
