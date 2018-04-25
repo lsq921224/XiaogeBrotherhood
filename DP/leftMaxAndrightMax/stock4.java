@@ -31,3 +31,32 @@ public int maxProfit(int k, int[] prices) {
     }
     return dp[k][n-1];
 }
+
+
+//Solution 2, similar to maximum subarray 3
+public class Solution {
+	public int maxProfit(int k, int[] prices) {
+		if(prices == null || prices.length == 0) return 0;
+		int n = prices.length;
+		if(k >= n / 2){
+			int profit = 0;
+			for(int i = 1; i < n; i++){
+				int diff = prices[i] - prices[i - 1];
+				if(diff > 0) profit += diff;
+			}
+			return profit;
+		}
+		int[][] localMax = new int[n][k + 1];
+		int[][] globalMax = new int[n][k + 1];
+		for(int i = 1; i < n; i++){
+			int diff = prices[i] - prices[i - 1];
+			for(int j = 1; j <= k && j * 2 <= i + 1; j++){
+				//if you already sell at i - 1 for all your chance, you could have sold at i by extending your last txn
+				//if you still have one transaction left, why not sell at last day.
+				localMax[i][j] = Math.max(localMax[i - 1][j], globalMax[i - 1][j - 1]) + diff;
+				globalMax[i][j] = Math.max(localMax[i][j], globalMax[i - 1][j]);
+			}
+		}
+		return globalMax[n - 1][k];
+	}
+}

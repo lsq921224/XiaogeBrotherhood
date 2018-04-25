@@ -29,3 +29,15 @@ public int maxSubArray(int[] nums) {
     }
     return res;
 }
+//solution3
+public int maxSubArray(int[] nums) {
+    if(nums == null || nums.length == 0) return 0;
+    int max = Integer.MIN_VALUE, min = 0;
+    int prefixSum = 0;
+    for(int i = 0; i < nums.length; i++){
+        prefixSum += nums[i];
+        max = Math.max(max, prefixSum - min);
+        min = Math.min(min, prefixSum);
+    }
+    return max;
+}

@@ -98,3 +98,32 @@ public class Solution {
     }
 
 }
+
+
+//Better Solution
+
+public boolean firstWillWin(int[] values) {
+    // write your code here
+    int n = values.length;
+    if(n <= 2) return true;
+    int[] dp = new int[n + 1];
+    Arrays.fill(dp, -1);
+    dp[0] = 0;
+    dp[1] = values[n - 1];
+    dp[2] = values[n - 1] + values[n - 2];
+    int sum = 0;
+    for(int num : values){
+        sum += num;
+    }
+    return 2 * memoizedSearch(n, values, dp) > sum;
+}
+private int memoizedSearch(int coins, int[] values, int[] dp) {
+    if(coins < 0) return 0;
+    if(dp[coins] != -1) return dp[coins];
+    int n = values.length;
+    int oneMax = values[n - coins] + Math.min(memoizedSearch(coins - 2, values, dp),memoizedSearch(coins - 3, values, dp));
+    int twoMax = values[n - coins] + values[n - coins + 1] + Math.min(memoizedSearch(coins - 3, values, dp),memoizedSearch(coins - 4, values, dp));
+    dp[coins] = Math.max(oneMax, twoMax);
+    return dp[coins];
+}
+}
