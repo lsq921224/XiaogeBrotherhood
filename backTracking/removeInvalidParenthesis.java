@@ -84,3 +84,44 @@ class Solution {
         sb.setLength(len);
     }
 }
+
+
+//If only need to return one result
+private static String removeInvalid(String str){
+    char[] chrArr = str.toCharArray();
+    int val = 0;
+    for(int i = 0; i < chrArr.length; i++){
+        if(chrArr[i] == '(') val ++;
+        else if(chrArr[i] == ')') val --;
+        if(val < 0) {
+            chrArr[i] = '#';
+            val = 0;
+        }
+    }
+    val = 0;
+    for(int i = chrArr.length - 1; i >= 0; i--){
+        if(chrArr[i] == ')') val ++;
+        else if(chrArr[i] == '(') val --;
+        if(val < 0){
+            chrArr[i] = '#';
+            val = 0;
+        }
+    }
+    StringBuilder sb = new StringBuilder();
+    for(int i = 0; i < chrArr.length; i++){
+        if(chrArr[i] != '#') sb.append(chrArr[i]);
+    }
+    return sb.toString();
+}
+public static void main(String[] args) {
+    String[] testcases = new String[]{"()()()()((()()())()(" ,
+    "()AD(S)A()W)(S))()ASD()",
+    "))ASDAS()()()Q(((())QWE)()",
+    "S()((A)()D))W)Q())(EQ())()W(",
+    "))ASD)QW(()S(Q)(WE)(Q()(AS)D("};
+    for(int i = 0; i < testcases.length; i++){
+        System.out.println("Input : " + testcases[i]);
+        System.out.println("Output : " + removeInvalid(testcases[i]));
+        System.out.println();
+    }
+}

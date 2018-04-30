@@ -124,3 +124,42 @@ public int liveNeighbors(int[][] board, int m, int n, int i, int j) {
     lives -= board[i][j] & 1;
     return lives;
 }
+
+
+public class Solution {
+    public void gameOfLife(int[][] board) {
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                board[i][j] = nextState(board, i, j);
+            }
+        }
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                if(board[i][j] == 2 || board[i][j] == -2) board[
+                i][j] = 1;
+                else board[i][j] = 0;
+            }
+        }
+    }
+    private int nextState(int[][] board, int row, int col){
+        int[] xDirs = {0, 0, 1, -1, 1, -1, -1, 1};
+        int[] yDirs = {1,-1, 0, 0, 1, -1, 1, -1};
+        int aliveCount = 0;
+        for(int i = 0; i < 8; i++){
+            int x = row + xDirs[i];
+            int y = col + yDirs[i];
+            // legal position
+            if(x >= 0 && x < board.length && y >= 0 && y < board[
+            0].length){
+                if(board[x][y] > 0) aliveCount ++;
+            }
+        }
+        if(board[row][col] == 0){
+            if(aliveCount == 3) return -2;
+            else return -3;
+        } else {
+            if(aliveCount == 2 || aliveCount == 3) return 2;
+            else return 3;
+        }
+    }
+}

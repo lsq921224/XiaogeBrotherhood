@@ -6,7 +6,7 @@ public class Solution {
       stack.push(root);
       while(!stack.isEmpty()){
           TreeNode cur=stack.pop();
-          res.add(cur.val);//addFirst for postOrder and push cur.right first and cur.left second
+          res.add(cur.val);//addFirst for postOrder and push cur.left first and cur.right second
           if(cur.right!=null)
               stack.push(cur.right);
           if(cur.left!=null)
@@ -49,7 +49,7 @@ public class Solution {
     }
     return result;
   }
-  
+
   public List<Integer> postorderTraversal(TreeNode root) {
     LinkedList<Integer> result = new LinkedList<>();
     Deque<TreeNode> stack = new ArrayDeque<>();
