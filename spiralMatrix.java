@@ -92,4 +92,28 @@ public class spiralMatrix {
         System.out.println(i);
       }
     }
+
+
+    public class Solution {
+        public int[][] generateMatrix(int n) {
+            if(n <= 0) return new int[0][0];
+            int[][] matrix = new int[n][n];
+            int rowStart = 0;
+            int rowEnd = n - 1;
+            int colStart = 0;
+            int colEnd = n - 1;
+            int curNum = 1;
+            while(rowStart <= rowEnd && colStart <= colEnd){
+                for(int i = colStart; i <= colEnd; i++) matrix[rowStart][i] = curNum++;
+                rowStart ++;
+                for(int i = rowStart; i <= rowEnd; i++) matrix[i][colEnd] = curNum++;
+                colEnd --;
+                if(rowStart <= rowEnd) for(int i = colEnd; i >= colStart; i--) matrix[rowEnd][i] = curNum++;
+                rowEnd --;
+                if(colStart <= colEnd) for(int i = rowEnd; i >= rowStart; i--) matrix[i][colStart] = curNum++;
+                colStart ++;
+            }
+            return matrix;
+        }
+    }
 }

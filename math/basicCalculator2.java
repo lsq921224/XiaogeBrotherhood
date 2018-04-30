@@ -90,3 +90,78 @@ class Solution {
         return res;
     }
 }
+
+
+//Solution with shunting-yard algorithm
+import java.util.*;
+class Solution {
+    public int calculate(String s) {
+    return evaluate(getRPN(s));
+}
+
+private String getRPN(String s) {
+    Stack<Character> stack = new Stack<>();
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < s.length(); i++) {
+        char c = s.charAt(i);
+        // get rid of empty space
+        if (c == ' ') continue;
+        if (Character.isDigit(c)) {
+            sb.append(c);
+        } else {
+            sb.append(' ');
+            if (c == '(') {
+                stack.push('(');
+            } else if (c == ')') {
+                while(stack.peek() != '(') {
+                    sb.append(stack.pop());
+                    sb.append(' ');
+                }
+                stack.pop();
+            } else {
+                // pop all larger or equal identifier
+                while(!stack.isEmpty() && getValue(c) <= getValue(stack.peek())) {
+                    sb.append(stack.pop());
+                    sb.append(' ');
+                }
+                // store the current operator
+                stack.push(c);
+            }
+        }
+    }
+    // some other operators may be left
+    while(!stack.isEmpty()) {
+        sb.append(' ');
+        sb.append(stack.pop());
+    }
+    return sb.toString();
+}
+
+private int evaluate(String s) {
+    String[] a = s.split(" ");
+    Stack<Integer> stack = new Stack<>();
+    for (int i = 0; i < a.length; i++) {
+        String c = a[i];
+        // for extra "   " leads to empty string
+        if (c.equals("")) continue;
+        if ("+-*/".indexOf(c) == -1) {
+            stack.push(Integer.parseInt(c));
+            continue;
+        }
+        int num1 = stack.pop();
+        int num2 = stack.pop();
+        if (c.equals("*")) stack.push(num1 * num2);
+        if (c.equals("/")) stack.push(num2 / num1);
+        if (c.equals("+")) stack.push(num2 + num1);
+        if (c.equals("-")) stack.push(num2 - num1);
+    }
+    return stack.pop();
+}
+
+private int getValue(char c) {
+    if (c == '*' || c == '/') return 3;
+    if (c == '+' || c == '-') return 2;
+    return 1;
+}
+
+}

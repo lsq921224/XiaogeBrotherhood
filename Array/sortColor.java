@@ -41,3 +41,38 @@ public class Solution {
     }
 
 }
+//K - partition
+class Solution {
+    /**
+    * @param colors: A list of integer
+    * @param k: An integer
+    * @return: nothing
+    */
+    public void sortColors2(int[] colors, int k) {
+        // write your code here
+        int left = 0;
+        int right = colors.length - 1;
+        int cur;
+        int lowColor = 1;
+        int highColor = k;
+        while(lowColor < highColor){
+            cur = left;
+            while(cur <= right){
+                if(colors[cur] == lowColor){
+                    swap(colors, cur ++, left ++);
+                } else if(colors[cur] == highColor){
+                    swap(colors, cur, right --);
+                } else {
+                    cur ++;
+                }
+            }
+            lowColor ++;
+            highColor --;
+        }
+    }
+    private void swap(int[] colors, int a, int b){
+        int temp = colors[a];
+        colors[a] = colors[b];
+        colors[b] = temp;
+    }
+}

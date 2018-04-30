@@ -32,3 +32,36 @@ public class Solution {
       return -1;
     }
 }
+
+
+// firstGreaterEqual 的解法在这里必须要对边界条件做处理
+public class Solution {
+    public int search(int[] nums, int target) {
+      if (nums.length == 0) return -1;
+      int left = 0;
+      int right = nums.length - 1;
+      while(left < right) {
+        int mid = (left + right) / 2;
+        if (nums[mid] == target) return mid;
+        if (nums[left] == target) return left;
+        if (nums[right] == target) return right;
+        if (nums[left] < nums[mid]) {
+          if (nums[left] < target && nums[mid] > target) {
+            right = mid;
+          } else {
+            left = mid + 1;
+          }
+        } else {
+          if (nums[mid] < target && target < nums[left]) {
+            left = mid + 1;
+          } else {
+            right = mid;
+          }
+        }
+      }
+      if (nums[left] == target) return left;
+      if (nums[right] == target) return right;
+      return -1;
+    }
+
+}
