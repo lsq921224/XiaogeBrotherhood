@@ -15,7 +15,7 @@ public class ImplementQueueWithLimitSizeOfArray {
     public Integer peek() {
         if (count == 0) return null;
         if (head == LIMIT - 1) {
-            return (Integer)((ArrayList<Object>)headList.get(head)).get(0);
+            return (Integer)((ArrayList<Object>)headList.get(head)).get(0); // Have to cast two times
         }
         return (Integer)headList.get(head);
     }
@@ -29,7 +29,7 @@ public class ImplementQueueWithLimitSizeOfArray {
             headList = tmp;
         }
         Integer val = (Integer)headList.get(head);
-        head++;
+        head++;// head++ has to apply for LIMIT -1 as well
         count--;
         return val;
     }
@@ -40,7 +40,7 @@ public class ImplementQueueWithLimitSizeOfArray {
             tailList.add(tmp);
             tail = 0;
             tmp.add(i);
-            tailList = tmp;
+            tailList = tmp;// don't forget this and tail has to ++ for this case too.
         } else {
             tailList.add(i);
         }

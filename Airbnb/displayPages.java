@@ -29,39 +29,52 @@
 // 6,10,199.1,SF
 // 1,16,190.4,SF
 // 2,18,161.2,SF
-// 3,76,146.2,SF	
+// 3,76,146.2,SF
 // 6,29,185.2,SF -- 这时不得不重复了，从原有队列拉出第一个
 // 6,21,162.1,SF
 // 2,30,149.1,SF
 // 2,14,141.1,San	Jose
-public List<String> displayPages(List<String> input, int pageSize) {
-    List<String> res = new ArrayList<>();
-    if (input == null || pageSize == 0) return res;
-    Interator<String> iter = new Interator<>();
-    HashSet<String> set = new HashSet<>();
-    //pageEnd means scan the first loop finished or not
-    boolean pageEnd = false;
-    int count = 0;
-    while(iter.hasNext()) {
-        String str = iter.next().split(',')[0];
-        if (!set.contains(str) || pageEnd) {
-            res.add(str);
-            set.add(str);
-            count++;
-            iter.remove();
+import java.util.*;
+public class displayPages {
+    public List<String> displayPages(List<String> input, int pageSize) {
+        List<String> res = new ArrayList<>();
+        if (input == null || pageSize == 0) return res;
+        Iterator<String> iter = input.iterator();
+        HashSet<String> set = new HashSet<>();
+        //pageEnd means scan the first loop finished or not
+        boolean pageEnd = false;
+        int count = 0;
+        while(iter.hasNext()) {
+            String str = iter.next().split(",")[0];
+            if (!set.contains(str) || pageEnd) {
+                res.add(str);
+                set.add(str);
+                count++;
+                iter.remove();
+            }
+            if (count == pageSize) {
+                if (!input.isEmpty()) res.add(" "); //Don't forget input cannot be empty here
+                count = 0;
+                set.clear();
+                iter = input.iterator();// don't forget to set the iterator here as well
+                pageEnd = false;
+            }
+            //没办法了 剩下的都要填满到当前页, 不一定是最后一页
+            if (!iter.hasNext()) {
+                pageEnd = true;
+                iter = input.iterator();
+            }
         }
-        if (count == pageSize) {
-            if (!input.isEmpty()) res.add(" "); //Don't forget input cannot be empty here
-            count = 0;
-            set.clear();
-            iter = input.iterator();
-            pageEnd = false;
-        }
-        //没办法了 剩下的都要填满到当前页, 不一定是最后一页
-        if (!iter.hasNext()) {
-            pageEnd = true;
-            iter = input.iterator();
-        }
+        // it would fill in first page first, and then second page.
+        return res;
     }
-    // it would fill in first page first, and then second page.
+    public static void main(String args[]) {
+        List<String> l = new ArrayList<>();
+        l.add("1");
+        l.add("2");
+        Iterator<String> iter = l.iterator();
+        iter.next();
+        iter.remove();
+        for (String s : l) System.out.println(s);
+    }
 }

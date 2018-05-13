@@ -14,6 +14,7 @@ private long search(int[] nums, int k, long left, long right) {
     if (count == k) {
         return res;
     } else if (count < k) {
+        // res + 1 and guess Math is kind of better optiomization
         return search(nums, k, Math.max(res + 1, guess), right);
     } else {
         return search(nums, k, left, res);

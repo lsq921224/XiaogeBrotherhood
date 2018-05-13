@@ -15,11 +15,13 @@ class Solution {
       for (int i = 0; i < words.length; i++) map.put(words[i], i);
       for (int i = 0; i < words.length; i++) {
         String word = words[i];
+        // this has to be equal here
         for (int j = 0; j <= word.length(); j++) {
           String str1 = word.substring(0, j);
           String str2 = word.substring(j);
           if (isPalindrome(str1)) {
             String revStr2 = new StringBuilder(str2).reverse().toString();
+            // can't be self, so map.get(revStr2) != i here is necessary
             if (map.containsKey(revStr2) && map.get(revStr2) != i) {
               List<Integer> l = new ArrayList<>();
               l.add(map.get(revStr2));
@@ -44,6 +46,7 @@ class Solution {
 
     }
     private boolean isPalindrome(String str) {
+      // empty string should return true;
       int n = str.length();
       int i = 0;
       int j = n - 1;
