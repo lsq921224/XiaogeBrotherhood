@@ -19,6 +19,19 @@ public class regularExpressionWithPlus{
         return dp[0][0];
     }
 
+    public boolean regMatch(String s, String p) {
+      if (p.length() == 0) return s.length() == 0;
+      boolean firstMatch = s.length() > 0 && (s.charAt(0) == p.charAt(0) || p.charAt(0) == '.');
+      if (p.length() > 1 && p.charAt(1) == '*') {
+        return firstMatch && regMatch(s.substring(1), p) || regMatch(s, p.substring(2));
+      } else if (p.length() > 1 && p.charAt(1) == '+') {
+          // fisrtMatch usually comes with the s.substring(1);
+        return firstMatch && (regMatch(s.substring(1), p) || regMatch(s.substring(1), p.substring(2)));
+      } else {
+        return firstMatch && regMatch(s.substring(1), p.substring(1));
+      }
+    }
+
     public static void main(String args[]) {
         regularExpressionWithPlus test = new regularExpressionWithPlus();
         System.out.println(test.isMatch("abbc", "ab+c"));

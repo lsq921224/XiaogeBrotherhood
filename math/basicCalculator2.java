@@ -109,11 +109,12 @@ private String getRPN(String s) {
         if (Character.isDigit(c)) {
             sb.append(c);
         } else {
-            sb.append(' ');
+            sb.append(' '); // don't forget this, otherwise it would mess up with numbers
             if (c == '(') {
                 stack.push('(');
             } else if (c == ')') {
                 while(stack.peek() != '(') {
+                    // this is append stack.pop() not c
                     sb.append(stack.pop());
                     sb.append(' ');
                 }
@@ -125,6 +126,7 @@ private String getRPN(String s) {
                     sb.append(' ');
                 }
                 // store the current operator
+                // don't forget
                 stack.push(c);
             }
         }
@@ -138,6 +140,7 @@ private String getRPN(String s) {
 }
 
 private int evaluate(String s) {
+    // have to split
     String[] a = s.split(" ");
     Stack<Integer> stack = new Stack<>();
     for (int i = 0; i < a.length; i++) {

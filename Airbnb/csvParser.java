@@ -10,33 +10,35 @@
 // basically need to deal with empty string case. NO!!
 // just deal with two quotes together, this is the escaping in CSV, and it that string has to be inQuote too.
 public String parseCSV(String str) {
+    List<String> res = new ArrayList<>();
+    boolean inQuote = false;
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < str.length(); i++) {
-        char c = str.charAt(i);
-        boolean q = false;
-        // started for the two double quotes  started, if the end of string is ", then it's okay to set it to be true, it doesn't matter
-        boolean started = false;
-        if (q) {
-            started = true;
-            if (c == '"') {
-                q = false;
+        if (inQuote) {
+            if (str.charAt(i) == '\"') {
+                if (i < str.length() - 1 && str.charAt(i + 1) == '\"') {
+                    sb.append("\"");
+                    // for too many duplicate " probably need a while loop to deal with it
+                    i++;
+                } else {
+                    inQuote = false;
+                }
             } else {
-                sb.append(c);
+                // don't forget this line
+                sb.append(str.charAt(i));
             }
         } else {
-            if (c == '"') {
-                if (started) {
-                    // only the second of two double quotes exist then insert
-                    sb.append('"');
-                }
-                q = true;
-            } else if (c == ',') {
+            if (str.charAt(i) == '\"') {
+                inQuote = true;
+            } else if (str.charAt(i) == ',') {
                 res.add(sb.toString());
                 sb.setLength(0);
+            } else {
+                sb.append(str.charAt(i));
             }
         }
     }
-    if(sb.length() > 0) {
+    if (sb.length() > 0) {
         res.add(sb.toString());
     }
     return String.join("|", res);
