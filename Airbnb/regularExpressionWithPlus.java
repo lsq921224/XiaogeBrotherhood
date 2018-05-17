@@ -4,6 +4,7 @@ public class regularExpressionWithPlus{
         dp[s.length()][p.length()] = true; // this is important
 
         for(int i = s.length(); i >= 0; i --) { // starts from the length, to match to the end of string
+            // starts from p - 1, otherwise firstMatch will fail
             for (int j = p.length() - 1; j >= 0; j--) {
                 boolean firstMatch = i < s.length() && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.');
                 if (j < p.length() - 1 && p.charAt(j + 1) == '*') {

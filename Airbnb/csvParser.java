@@ -13,6 +13,7 @@ public String parseCSV(String str) {
     List<String> res = new ArrayList<>();
     boolean inQuote = false;
     StringBuilder sb = new StringBuilder();
+    // No need to split
     for (int i = 0; i < str.length(); i++) {
         if (inQuote) {
             if (str.charAt(i) == '\"') {
@@ -38,6 +39,7 @@ public String parseCSV(String str) {
             }
         }
     }
+    // don't forget to deal with the rest
     if (sb.length() > 0) {
         res.add(sb.toString());
     }

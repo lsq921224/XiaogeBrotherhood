@@ -35,6 +35,7 @@ public class TenWizard {
 
         List<Integer> res = new ArrayList<>();
         int t = target;
+        //don't do parent[t] != source
         while(t != source) {
             res.add(t);
             t = parent[t];
@@ -57,5 +58,45 @@ public class TenWizard {
         }
         List<Integer> res = sol.getShortestPath(wizards, 0, 9);
         for (int i : res) System.out.println(i);//0, 5, 9
+    }
+
+
+    //Array Version
+
+    public List<Integer> getShortestPath(List<List<Integer>> wizards, int source, int target) {
+      List<Integer> res = new ArrayList<>();
+      if (wizards.size() == 0) return res;
+
+      Queue<int[]> queue = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+      int[] dists = new int[wizards.size()];
+      for (int i = 0; i < wizards.size(); i++) {
+        if (i == source) {
+          dists[i] = 0;
+        } else {
+          dists[i] = Integer.MAX_VALUE;
+        }
+      }
+      int[] parents = new int[wizards.size()];
+      queue.offer(new int[]{source, dists[source]});
+      while(!queue.isEmpty()) {
+        int[] curr = queue.poll();
+        for (int next : wizards.get(curr[0])) {
+          int nextDist = dists[next];
+          int weight = (next - curr[0]) * (next - curr[0]);
+          if (curr[1] + weight < nextDist) {
+            dists[next] = curr[1] + weight;
+            queue.offer(new int[]{next, dists[next]});
+            parents[next] = curr[0];
+          }
+        }
+      }
+
+      while(target != source) {
+        res.add(target);
+        target = parents[target];
+      }
+      res.add(source);
+      Collections.reverse(res);
+      return res;
     }
 }

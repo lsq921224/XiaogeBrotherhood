@@ -48,7 +48,7 @@ class Solution {
             }
             prices = temp;
         }
-        //Bellman Ford can help detect cycles
+        //Bellman Ford can help detect cycles with negative weight, positive cycle is fine
         // for each edge (u, v) with weight w in edges:
         //     if distance[u] + w < distance[v]:
         //     error "Graph contains a negative-weight cycle"

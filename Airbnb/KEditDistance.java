@@ -33,8 +33,10 @@ public class KEditDistance {
     }
 
     private void helper(String s, List<String> res, String target, int k, TrieNode root, int[] prevDist) {
+        // need target.lenth, not idx
         if (root.isLeaf) {
             if (prevDist[target.length()] <= k) {
+                // would keep checking even match
                 res.add(s);
             } else {
                 return;

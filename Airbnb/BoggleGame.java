@@ -20,12 +20,8 @@ class BoggleGame {
         for (String w : words) {
             t.add(w);
         }
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                boolean[][] visited = new boolean[board.length][board[0].length];
-                findWords(board, t.root, visited, i, j, res, new ArrayList<>());
-            }
-        }
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        findWords(board, t.root, visited, 0, 0, res, new ArrayList<>());
         return res;
     }
 
