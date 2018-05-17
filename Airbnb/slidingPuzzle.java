@@ -38,9 +38,6 @@ class Solution {
 //Follow Up OOD
 
 class SlidingPuzzle {
-    private int[] dx = {-1, 0, 1, 0};
-    private int[] dy = {0, -1, 0, 1};
-
     class Status {
         int[][] matrix;
         int x, y;
@@ -54,8 +51,8 @@ class SlidingPuzzle {
         String encodeMatrix() {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < matrix.length; i++)
-                for (int j = 0; j < matrix.length; j++)
-                    builder.append(matrix[j]).append(",");
+                for (int j = 0; j < matrix[0].length; j++)
+                    builder.append(matrix[i][j]).append(",");
             return builder.toString();
         }
         void move(int i, int j) {
@@ -74,37 +71,35 @@ class SlidingPuzzle {
         int[][] finalMatrix = new int[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                finalMatrix[j] = i * m + j;
-                if (matrix[j] == 0) {
+                finalMatrix[i][j] = i * m + j + 1;
+                if (matrix[i][j] == 0) {
                     startX = i;
                     startY = j;
                 }
             }
         }
+        finalMatrix[n - 1][m - 1] = 0;
 
         Status initial = new Status(matrix, startX, startY);
-        Status finals = new Status(finalMatrix, 0, 0);
+        Status finals = new Status(finalMatrix, n - 1, m - 1);
         Queue<Status> queue = new LinkedList<>();
         queue.add(initial);
         Set<String> visited = new HashSet<>();
         visited.add(initial.encodeMatrix());
-        System.out.println(initial.encodeMatrix());
 
         while (!queue.isEmpty()) {
             Status current = queue.poll();
-            System.out.println("F: " + current.encodeMatrix());
             int xx = current.x, yy = current.y;
             for (int i = 0; i < 4; i++) {
-                int x = xx + dx;
-                int y = yy + dy;
-                if (x < 0 || x >= m || y < 0 || y >= n)
+                int x = xx + dx[i];
+                int y = yy + dy[i];
+                if (x < 0 || x >= n || y < 0 || y >= m)
                     continue;
                 current.move(x, y);
                 if (current.encodeMatrix().equals(finals.encodeMatrix()))
                     return true;
                 if (!visited.contains(current.encodeMatrix())) {
                     visited.add(current.encodeMatrix());
-                    System.out.println(current.encodeMatrix());
                     queue.add(new Status(current.matrix, current.x, current.y));
                 }
                 current.move(xx, yy);
@@ -115,10 +110,11 @@ class SlidingPuzzle {
     }
 
 
-    public final static void main(String[] args) {
-        SlidingGame sg = new SlidingGame();
-        int[][] matrix = new int[][]{{2, 3, 8}, {1, 4, 7}, {6, 0, 5}};
-        System.out.println(sg.canSolve(matrix));
-    }
 
-}
+        public final static void main(String[] args) {
+            SlidingGame sg = new SlidingGame();
+            int[][] matrix = new int[][]{{2, 3, 8}, {1, 4, 7}, {6, 0, 5}};
+            System.out.println(sg.canSolve(matrix));
+        }
+
+    }

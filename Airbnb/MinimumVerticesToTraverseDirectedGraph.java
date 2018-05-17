@@ -1,10 +1,13 @@
 import java.util.*;
 public class MinimumVerticesToTraverseDirectedGraph {
     private void search(Set<Integer> res, Map<Integer, Set<Integer>> nodes, int cur, int start, Set<Integer> visited, Set<Integer> currVisited) {
+        // this currVisited has to refresh every time, since each loop should not influence each other, otherwise it can not find out
+        // the path this node can go since most of the nodes have been marked by other paths
         currVisited.add(cur);
         visited.add(cur);
         for (int next : nodes.get(cur)) {
-            // this is important, it means this point can be reached by this start, so no need to keep it.
+            // this is important, it means this point can be reached by this start, so no need to keep it, just keep those point that can't be reached
+            // next != start, means this is a self loop, which we do not consider since it's not traversing any node
             if (res.contains(next) && next != start) {
                 res.remove(next);
             }
@@ -26,7 +29,6 @@ public class MinimumVerticesToTraverseDirectedGraph {
         for (int i = 0; i < n; i++) {
             if (!visited.contains(i)) {
                 res.add(i);
-                visited.add(i);
                 search(res, nodes, i, i, visited, new HashSet<>());
             }
         }
@@ -34,7 +36,7 @@ public class MinimumVerticesToTraverseDirectedGraph {
     }
 
     public static void main(String[] args) {
-        int[][] e =  new int[][]{{2, 9}, {3, 3}, {3, 5}, {3, 7}, {4, 8}, {5, 8}, {6, 6}, {7, 4}, {8, 7}, {9, 3}, {9, 6}};
+        int[][] e =  new int[][]{{2, 9}, {3, 3}, {3, 5}, {3, 7}, {4, 8}, {5, 8}, {6, 6}, {7, 4}, {8, 7}, {9, 3}, {9, 6}, {1, 1}};
         MinimumVerticesToTraverseDirectedGraph t = new MinimumVerticesToTraverseDirectedGraph();
         for (int i : t.getMin(e, 10)) System.out.println(i);//0 1 2
 

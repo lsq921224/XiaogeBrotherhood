@@ -21,8 +21,9 @@ public class GetCombos {
             return;
         }
         for (int i = idx; i < pricesCent.length; i++) {
-            if (i > idx && pricesCent[i] == pricesCent[i - 1]) continue;
-            if (pricesCent[i] > pricesTarget) break;
+            // 不用去重， 因为每个菜都不一样
+            // if (i > idx && pricesCent[i] == pricesCent[i - 1]) continue;
+            if (pricesCent[i] > pricesTarget) continue;
             l.add(prices[i]);
             // the  index here is not idx + 1!!!!!!!!!!!!!!!!!!!!!
             helper(res, i + 1, pricesCent, prices, l, pricesTarget - pricesCent[i]);
@@ -31,6 +32,7 @@ public class GetCombos {
     }
     public static void main(String[] args) {
         GetCombos t = new GetCombos();
+        // would fail on some case like 0.444, 0.443 -> 0.887, since it's using round
         double[] a = {1.5, 1.1213, 0.6213, 0.5};
         for (List<Double> l : t.getCombos(a, 2.6213)) {
             for (double d : l) {

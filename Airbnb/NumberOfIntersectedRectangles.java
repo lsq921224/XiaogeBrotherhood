@@ -5,6 +5,7 @@ public class NumberOfIntersectedRectangles {
         int n = rectangles.length;
         parent = new int[n];
         for (int i = 0; i < n; i++) {
+            // don't forget parent initialization
             parent[i] = i;
         }
         // count is starting with n + 1
@@ -17,6 +18,7 @@ public class NumberOfIntersectedRectangles {
                 if (intersect(rect1, rect2)) {
                     int r1 = find(i);
                     int r2 = find(j);
+                    //dont't forget r1 != r2
                     if (r1 != r2) {
                         parent[r1] = r2;
                     }
