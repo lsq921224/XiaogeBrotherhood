@@ -10,7 +10,7 @@ public class TenWizard {
             return this.dist - w2.dist;
         }
     }
-    public List<Integer> getShortestPath(List<List<Integer>> wizards, int source, int target) {
+    public List<Integer> getShortestPath2(List<List<Integer>> wizards, int source, int target) {
         int n = wizards.size();
         Map<Integer, Wizard> map = new HashMap<>();
         int[] parent = new int[n];
@@ -80,6 +80,7 @@ public class TenWizard {
       queue.offer(new int[]{source, dists[source]});
       while(!queue.isEmpty()) {
         int[] curr = queue.poll();
+        if (curr[0] == target) break;
         for (int next : wizards.get(curr[0])) {
           int nextDist = dists[next];
           int weight = (next - curr[0]) * (next - curr[0]);
