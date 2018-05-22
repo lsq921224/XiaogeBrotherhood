@@ -1,5 +1,6 @@
 class Solution {
     //Dijkstra's
+    //Follow Up if you have budget
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
         Map<Integer, Map<Integer, Integer>> prices = new HashMap<>();
         for (int[] f : flights) {

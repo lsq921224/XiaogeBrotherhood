@@ -11,7 +11,7 @@ public class regularExpressionWithPlus{
                     dp[i][j] = firstMatch && dp[i+1][j] || dp[i][j + 2];
                 }else if (j < p.length() - 1 && p.charAt(j + 1) == '+') {
                     // for the '+' case you need to make sure i + 1 is within range
-                    dp[i][j] = firstMatch && dp[i+1][j] || (i < s.length() - 1 && dp[i + 1][j + 2]);
+                    dp[i][j] = firstMatch && dp[i+1][j] || dp[i + 1][j + 2];
                 } else {
                     dp[i][j] = firstMatch && dp[i+1][j+1];
                 }

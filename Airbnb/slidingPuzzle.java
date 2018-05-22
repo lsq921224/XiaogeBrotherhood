@@ -72,10 +72,6 @@ class SlidingPuzzle {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 finalMatrix[i][j] = i * m + j + 1;
-                if (matrix[i][j] == 0) {
-                    startX = i;
-                    startY = j;
-                }
             }
         }
         finalMatrix[n - 1][m - 1] = 0;

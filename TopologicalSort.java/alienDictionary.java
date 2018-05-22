@@ -19,6 +19,7 @@ public String alienOrder(String[] words) {
             if(c1!=c2){
                 Set<Character> set=new HashSet<Character>();
                 if(map.containsKey(c1)) set=map.get(c1);
+                // If set already have this path, then don't add degree!!!
                 if(!set.contains(c2)){
                     set.add(c2);
                     map.put(c1, set);
