@@ -45,9 +45,12 @@ class Solution {
         Arrays.sort(arr);
         int room = 0, res = 0;
         for (Object c : arr) {
-            room += map.get(c);
+            room += map.get(c);// += not =
             if (res < room) res = room;
         }
         return res;
     }
+
+
+    //Follow-up 
 }

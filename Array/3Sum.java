@@ -32,4 +32,28 @@ public class Solution {
         return res;
 
     }
+    //Follow Up if you one of the number could use 2 times.
+
+    // assuming no duplicate in nums
+public List<int[]> threeSum(int[] nums, int target) {
+    Arrays.sort(nums);
+
+    List<int[]> ret = new LinkedList<>();
+    for (int i = 0; i < nums.length; i++) {
+        int left = i, right = nums.length - 1;
+        while (left <= right) {
+            int sum = nums[i] + nums[left] + nums[right] - target;
+            if (sum == 0) {
+                if (i == left && left == right) break;
+                ret.add(new int[]{nums[i], nums[left], nums[right]});
+                left++;
+                right--;
+            } else if (sum > 0)
+                right--;
+            else
+                left++;
+        }
+    }
+    return ret;
+}
 }

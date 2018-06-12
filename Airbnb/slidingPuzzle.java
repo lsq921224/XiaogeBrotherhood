@@ -1,42 +1,42 @@
-
-class Solution {
-    public int slidingPuzzle(int[][] board) {
-        Set<String> seen = new HashSet<>(); // used to avoid duplicates
-        String target = "123450";
-        // convert board to string - initial state.
-        String s = Arrays.deepToString(board).replaceAll("\\[|\\]|,|\\s", "");
-        Queue<String> q = new LinkedList<>(Arrays.asList(s));
-        seen.add(s); // add initial state to set.
-        int ans = 0; // record the # of rounds of Breadth Search
-        while (!q.isEmpty()) { // Not traverse all states yet?
-            // loop used to control search breadth.
-            for (int sz = q.size(); sz > 0; --sz) {
-                String str = q.poll();
-                if (str.equals(target)) { return ans; } // found target.
-                int i = str.indexOf('0'); // locate '0'
-                int[] d = { 1, -1, 3, -3 }; // potential swap displacements.
-                for (int k = 0; k < 4; ++k) { // traverse all options.
-                    int j = i + d[k]; // potential swap index.
-                    // conditional used to avoid invalid swaps.
-                    if (j < 0 || j > 5 || i == 2 && j == 3 || i == 3 && j == 2) { continue; }
-                    char[] ch = str.toCharArray();
-                    // swap ch[i] and ch[j].
-                    char tmp = ch[i];
-                    ch[i] = ch[j];
-                    ch[j] = tmp;
-                    s = String.valueOf(ch); // a new candidate state.
-                    if (seen.add(s)) { q.offer(s); } //Avoid duplicate.
-                }
-            }
-            ++ans; // finished a round of Breadth Search, plus 1.
-        }
-        return -1;
-    }
-}
+//
+// class Solution {
+//     public int slidingPuzzle(int[][] board) {
+//         Set<String> seen = new HashSet<>(); // used to avoid duplicates
+//         String target = "123450";
+//         // convert board to string - initial state.
+//         String s = Arrays.deepToString(board).replaceAll("\\[|\\]|,|\\s", "");
+//         Queue<String> q = new LinkedList<>(Arrays.asList(s));
+//         seen.add(s); // add initial state to set.
+//         int ans = 0; // record the # of rounds of Breadth Search
+//         while (!q.isEmpty()) { // Not traverse all states yet?
+//             // loop used to control search breadth.
+//             for (int sz = q.size(); sz > 0; --sz) {
+//                 String str = q.poll();
+//                 if (str.equals(target)) { return ans; } // found target.
+//                 int i = str.indexOf('0'); // locate '0'
+//                 int[] d = { 1, -1, 3, -3 }; // potential swap displacements.
+//                 for (int k = 0; k < 4; ++k) { // traverse all options.
+//                     int j = i + d[k]; // potential swap index.
+//                     // conditional used to avoid invalid swaps.
+//                     if (j < 0 || j > 5 || i == 2 && j == 3 || i == 3 && j == 2) { continue; }
+//                     char[] ch = str.toCharArray();
+//                     // swap ch[i] and ch[j].
+//                     char tmp = ch[i];
+//                     ch[i] = ch[j];
+//                     ch[j] = tmp;
+//                     s = String.valueOf(ch); // a new candidate state.
+//                     if (seen.add(s)) { q.offer(s); } //Avoid duplicate.
+//                 }
+//             }
+//             ++ans; // finished a round of Breadth Search, plus 1.
+//         }
+//         return -1;
+//     }
+// }
 
 
 //Follow Up OOD
-
+import java.util.*;
 class SlidingPuzzle {
     class Status {
         int[][] matrix;
@@ -62,6 +62,8 @@ class SlidingPuzzle {
             y = j;
         }
     }
+    int[] dx = {-1, 1, 0, 0};
+    int[] dy = {0, 0, 1, -1};
 
     public boolean canSolve(int[][] matrix) {
         int n = matrix.length;
@@ -106,10 +108,52 @@ class SlidingPuzzle {
     }
 
 
+    // If the width is odd, then every solvable state has an even number of inversions.
+    // If the width is even, then every solvable state has
+    // an even number of inversions if the blank is on an odd numbered row counting from the bottom;
+    // an odd number of inversions if the blank is on an even numbered row counting from the bottom;
+public boolean isSolvable(int[][] puzzle)
+{
+    int inversionCount = 0;
+    int N = puzzle.length;
+    int row = 0; // the blank row
+
+    for (int i = 0; i < N * N - 1; i++) {
+        for (int j = i + 1; j < N * N; j++) {
+            int x1 = i / N;
+            int y1 = i % N;
+            int x2 = j / N;
+            int y2 = j % N;
+            if (puzzle[x1][y1] > puzzle[x2][y2]) {
+                inversionCount++;
+            }
+        }
+    }
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            if (puzzle[i][j] == 0) {
+                row = j;
+            }
+        }
+    }
+    System.out.println(inversionCount);
+
+    if (N % 2 == 0) { // even grid
+        if ((N - row) % 2 == 0) { // blank on even row; counting from bottom
+            return inversionCount % 2 != 0;
+        } else { // blank on even row; counting from bottom
+            return inversionCount % 2 == 0;
+        }
+    } else { // odd grid
+        return inversionCount % 2 == 0;
+    }
+}
+
+
 
         public final static void main(String[] args) {
-            SlidingGame sg = new SlidingGame();
-            int[][] matrix = new int[][]{{2, 3, 8}, {1, 4, 7}, {6, 0, 5}};
+            SlidingPuzzle sg = new SlidingPuzzle();
+            int[][] matrix = new int[][]{{3, 9, 1, 15}, {14, 11, 4, 6}, {13, 0, 10, 12}, {7, 2, 8, 5}};
             System.out.println(sg.canSolve(matrix));
         }
 

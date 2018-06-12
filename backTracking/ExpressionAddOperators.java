@@ -12,6 +12,7 @@ class Solution {
             return;
         }
         for (int i = idx; i < num.length(); i++) {
+            // Dont forget to remove the leading zero
             if (i != idx && num.charAt(idx) == '0') break;
             //for excluding the leading zeros
             //"105", 5 -> ["1*0+5","10-5"]
@@ -20,7 +21,9 @@ class Solution {
             //
             // "105", 5 -> ["1*0+5","10-5", "1*05"]
             // "00", 0 -> ["0+0", "0-0", "0*0", "00"]
+
             long current_val = Long.parseLong(num.substring(idx, i + 1));
+            // the initial case
             if (idx == 0) {
                 helper(num, target, res, path + current_val, i + 1, current_val, current_val);
             } else {

@@ -30,9 +30,9 @@ class QuickSelect {
 
     public static void main(String args[]) {
         int[] A = {6,4,7,9,1,2,0,5,3,8, 8, 8, 8};
+        int test = new QuickSelect().quickSelect(A, 5);
         for (int i = 0; i < 13; i++) {
-            int test = new QuickSelect().quickSelect(A, i);
-            System.out.println(test);
+            System.out.println(A[i]);
         }
     }
 }

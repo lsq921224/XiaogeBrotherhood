@@ -1,33 +1,33 @@
 import java.util.*;
 public class ListOfListIterator {
-    private Iterator<List<Integer>> rowIter;
-    private Iterator<Integer> colIter;
-
-    public ListOfListIterator(List<List<Integer>> list) {
-        rowIter = list.iterator();
-        colIter = null;
-    }
-
-    public Integer next() {
-        return colIter.next();
-    }
-
-    public boolean hasNext() {
-        // if has to be while loop since it would deal with the case of empty arraylist
-        while(rowIter.hasNext() && (colIter == null || !colIter.hasNext()))
-            colIter = rowIter.next().iterator();
-        return colIter != null && colIter.hasNext();
-    }
-
-    public void remove() {
-        // for the first time call remove
-        // remove don't care about hasNext or not, it cares about current
-        //don't need  !colIter.hasNext() here since if you are removing the last element of col, then it needs to use the old colIter
-
-        // if(rowIter.hasNext() && (colIter == null))
-        //     colIter = rowIter.next().iterator();
-        if (colIter != null) colIter.remove();
-    }
+    // private Iterator<List<Integer>> rowIter;
+    // private Iterator<Integer> colIter;
+    //
+    // public ListOfListIterator(List<List<Integer>> list) {
+    //     rowIter = list.iterator();
+    //     colIter = null;
+    // }
+    //
+    // public Integer next() {
+    //     return colIter.next();
+    // }
+    //
+    // public boolean hasNext() {
+    //     // if has to be while loop since it would deal with the case of empty arraylist
+    //     while(rowIter.hasNext() && (colIter == null || !colIter.hasNext()))
+    //         colIter = rowIter.next().iterator();
+    //     return colIter != null && colIter.hasNext();
+    // }
+    //
+    // public void remove() {
+    //     // for the first time call remove
+    //     // remove don't care about hasNext or not, it cares about current
+    //     //don't need  !colIter.hasNext() here since if you are removing the last element of col, then it needs to use the old colIter
+    //
+    //     // if(rowIter.hasNext() && (colIter == null))
+    //     //     colIter = rowIter.next().iterator();
+    //     if (colIter != null) colIter.remove();
+    // }
 
 
     //follow Up 小哥二号出了道flattern 2D vector with remove的题，我虽然当时没有做过但也知道解法啊，秒了+thorough testcases。
@@ -51,14 +51,17 @@ public class ListOfListIterator {
       List<Integer> row4 = new ArrayList<>();
       array.add(row4);
 
+      List<Integer> row5 = new ArrayList<>();
+      row5.add(5);
+      array.add(row5);
+
       ListOfListIterator sol = new ListOfListIterator(array);
       while (sol.hasNext()) {
         int result = sol.next();
         System.out.println(result);
-
-        if (result == 3 || result == 4) {
-          sol.remove();
-        }
+        if (result == 5)
+            System.out.println(sol.hasNext());
+        if (result != 4) sol.remove();
       }
 
       System.out.println();
@@ -80,35 +83,38 @@ public class ListOfListIterator {
     }
 
     public Integer next() {
-        return list.get(row).get(col++);
+        if (hasNext()) {
+            return list.get(row).get(col++);
+        } else {
+            return null;
+        }
     }
 
     public boolean hasNext() {
-        int size = list.get(row).size();
         // have to check the row first, since that row could be removed to be empty
-        while (row < list.size() && list.get(row).size() == 0 ) {
-            row++;
-        }
-        if (row >= list.size()) return false;
-        if (col == size) {
+        // while (row < list.size() && list.get(row).size() == 0 ) {
+        //     row++;
+        // }
+        // if (row >= list.size()) return false;
+        if (col == list.get(row).size()) {
             row++;
             while (row < list.size() && list.get(row).size() == 0 ) {
                 row++;
             }
-            if (row >= list.size()) return false;
             col = 0;
         }
-        return true;
+        return row < list.size() && row >= 0 && col < list.get(row).size() && col >= 0;
     }
 
     public void remove() {
         if(col == 0) {
-            if (row == 0) return;
+            if (row == 0) return; // dont need this line
             else {
-                while(row > 0 && list.get(row - 1).size() == 0) {
+                row--;
+                while(row >= 0 && list.get(row).size() == 0) {
                     row--;
                 }
-                if (row == 0) return;
+                if (row == -1) return;
                 col = list.get(row).size() - 1;
             }
         } else {

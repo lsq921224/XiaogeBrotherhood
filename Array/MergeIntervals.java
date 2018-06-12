@@ -19,7 +19,7 @@ class Solution {
                     Interval tmp = res.remove(res.size() - 1);
                     tmp.end = interval.end;
                     right = tmp.end;
-                    res.add(res);
+                    res.add(tmp);
                 }
             } else {
                 res.add(interval);

@@ -13,6 +13,7 @@ class Solution {
     }
 
     public void helper(List<String> res,String s, String str, int i, Set<String> dict){
+        //maybe better to use hashmap to store the Result
 		int len=s.length();
 		if(len==i){
 			res.add(str.substring(1));

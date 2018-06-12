@@ -80,7 +80,7 @@ public class ImplementQueueWithLimitSizeOfArray {
     public Integer poll() {
         if (tail.list.size() == 0) return null;
         int res = tail.list.remove(0);
-        if (tail.list.size() == 0) {
+        if (tail.list.size() == 0 && head != tail) {
             tail = tail.next;
         }
         return res;

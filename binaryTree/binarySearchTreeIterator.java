@@ -8,6 +8,9 @@
  * }
  */
 
+
+ //PreOrder and PostOrder don't need to push all depth node into it
+
 public class BSTIterator {
     Stack<TreeNode> stack;
     TreeNode next;

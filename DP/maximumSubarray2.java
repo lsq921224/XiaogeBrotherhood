@@ -25,6 +25,7 @@ public class Solution {
         prefixSum = 0;
         minSum = 0;
         max = Integer.MIN_VALUE;
+        // Same logic if starting from right
         for(int i = n - 1; i >= 0; i- ){
             prefixSum += nums.get(i);
             max = Math.max(max, prefixSum - minSum);

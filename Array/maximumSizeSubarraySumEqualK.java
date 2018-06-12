@@ -57,6 +57,7 @@ class Solution {
             sum = sum + nums[i];
             if (sum == k) max = i + 1;
             else if (map.containsKey(sum - k)) max = Math.max(max, i - map.get(sum - k));
+            // no -1 in i - map.get(sum - k), since line 58 was dealing with it, in this case.
             //already know the first one in the hasmap has to be the maximum length one!!!
             if (!map.containsKey(sum)) map.put(sum, i);
         }
