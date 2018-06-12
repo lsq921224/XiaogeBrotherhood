@@ -24,14 +24,14 @@ public class travelBuddy {
     public List<String> recommendCities(int k) {
         List<String> res = new ArrayList<>();
         int i = 0;
-        while(i < buddies.size() && res.size() <= k) {
+        while(i < buddies.size() && res.size() < k) {
             Set<String> tmp = buddies.get(i).list;
             tmp.removeAll(this.myWishList);
             if (k - res.size() >= tmp.size()) {
                 res.addAll(tmp);
             } else {
                 Iterator<String> iter = tmp.iterator();
-                while(k - res.size() - 1 >= 0) {
+                while(k - res.size() > 0) {
                     res.add(iter.next());
                 }
             }

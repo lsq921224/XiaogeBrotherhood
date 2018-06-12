@@ -41,11 +41,11 @@ class Solution {
                 stack.push(Integer.parseInt(message[0]));
                 curr_time = Integer.parseInt(message[2]);
             } else {
-                if (stack.peek() == Integer.parseInt(message[0])) {
+                if (stack.peek() == Integer.parseInt(message[0])) { // this line is not necessary
                     res[stack.peek()] += Integer.parseInt(message[2]) - curr_time + 1; //+1 here means the end time is counted to the current timestamp
+                    stack.pop();
+                    curr_time = Integer.parseInt(message[2]) + 1; //+ 1 here is important!!Since end is not counted the next timestamp
                 }
-                stack.pop();
-                curr_time = Integer.parseInt(message[2]) + 1; //+ 1 here is important!!Since end is not counted the next timestamp
             }
         }
         return res;

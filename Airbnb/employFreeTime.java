@@ -1,22 +1,23 @@
-public List<Interval> employeeFreeTime(List<List<Interval>> avails) {
-    List<Interval> result = new ArrayList<>();
-    List<Interval> timeLine = new ArrayList<>();
-    avails.forEach(e -> timeLine.addAll(e));
-    Collections.sort(timeLine, ((a, b) -> a.start - b.start));
+// public List<Interval> employeeFreeTime(List<List<Interval>> avails) {
+//     List<Interval> result = new ArrayList<>();
+//     List<Interval> timeLine = new ArrayList<>();
+//     avails.forEach(e -> timeLine.addAll(e));
+//     Collections.sort(timeLine, ((a, b) -> a.start - b.start));
+//
+//     Interval temp = timeLine.get(0);
+//     for(Interval each : timeLine) {
+//         if(temp.end < each.start) {
+//             result.add(new Interval(temp.end, each.start));
+//             temp = each;
+//         }else{
+//             temp = temp.end < each.end ? each : temp;
+//         }
+//     }
+//     return result;
+// }
+import java.util.*;
 
-    Interval temp = timeLine.get(0);
-    for(Interval each : timeLine) {
-        if(temp.end < each.start) {
-            result.add(new Interval(temp.end, each.start));
-            temp = each;
-        }else{
-            temp = temp.end < each.end ? each : temp;
-        }
-    }
-    return result;
-}
-
-class Solution {
+class employeeFreeTime {
   static class Point {
     int flag;
     int time;
@@ -63,9 +64,8 @@ class Solution {
         start = Math.min(start, l.get(i).time);
       } else if (start != Integer.MAX_VALUE) {
         end = l.get(i).time;
-      }
-      if (start != Integer.MAX_VALUE && end != -1) {
-        res.add(new Interval(start, end));
+        if (start != end)
+          res.add(new Interval(start, end));
         start = Integer.MAX_VALUE;
         end = -1;
       }
@@ -87,18 +87,18 @@ class Solution {
 
     Interval i3 = new Interval(2, 4);
     List<Interval> tmp1 = new ArrayList<>();
-    tmp.add(i3);
+    tmp1.add(i3);
     intervals.add(tmp1);
 
-    Interval i4 = new Interval(1, 3);
+    Interval i4 = new Interval(1, 4);
     Interval i5 = new Interval(9, 12);
     List<Interval> tmp2 = new ArrayList<>();
-    tmp.add(i4);
-    tmp.add(i5);
+    tmp2.add(i4);
+    tmp2.add(i5);
     intervals.add(tmp2);
 
-    Solution s = new Solution();
-    for (Interval i : s.getAvailableIntervals(intervals, 1)) {
+    employeeFreeTime s = new employeeFreeTime();
+    for (Interval i : s.getAvailableIntervals(intervals, 3)) {
       System.out.print(i.start);
       System.out.print(",");
       System.out.println(i.end);

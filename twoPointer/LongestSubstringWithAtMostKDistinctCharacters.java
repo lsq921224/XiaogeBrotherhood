@@ -13,7 +13,7 @@ public class Solution {
          for (int i = 0; i < ch.length; i++) {
              char c = ch[i];
              if (map.containsKey(c)) {
-                 map.put(c, map.get(c) + 1);
+                     map.put(c, map.get(c) + 1);
              }
              else {
                  while (j < s.length() && map.size() >= k) {

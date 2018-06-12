@@ -3,6 +3,7 @@ class Solution {
         Map<Integer,Integer> ranges = new HashMap<>();
         int max = 0;
         for (int num : nums) {
+            // this is important too
             if (ranges.containsKey(num)) continue;
 
             // 1.Find left and right num

@@ -2,81 +2,91 @@
 // for 23333, pour at last, it should go to index 0;
 // for 33333, pour at last, it should go to last;
 // for 12345, pour at alst, it should go to first;
-public int[] pourWater(int[] heights, int V, int K) {
-        if (heights == null || heights.length == 0 || V == 0) {
-            return heights;
-        }
-        int index;
-        while (V > 0) {
-            index = K;
-            // don't use while loop for this,
-            for (int i = K - 1; i >= 0; i--) {
-                if (heights[i] > heights[index]) {
-                    break;
-                } else if (heights[i] < heights[index]) {
-                    index = i;
-                }
-            }
-            if (index != K) {
-                heights[index]++;
-                V--;
-                continue;
-            }
-            for (int i = K + 1; i < heights.length; i++) {
-                if (heights[i] > heights[index]) {
-                    break;
-                } else if (heights[i] < heights[index]) {
-                    index = i;
-                }
-            }
-            heights[index]++;
-            V--;
-        }
-        return heights;
-    }
+// public int[] pourWater(int[] heights, int V, int K) {
+//         if (heights == null || heights.length == 0 || V == 0) {
+//             return heights;
+//         }
+//         int index;
+//         while (V > 0) {
+//             index = K;
+//             // don't use while loop for this,
+//             for (int i = K - 1; i >= 0; i--) {
+//                 if (heights[i] > heights[index]) {
+//                     break;
+//                 } else if (heights[i] < heights[index]) {
+//                     // need too update index
+//                     index = i;
+//                 }
+//             }
+//             if (index == 0) {
+//                 V--;
+//                 continue;
+//             }
+//             if (index != K) {
+//                 heights[index]++;
+//                 V--;
+//                 continue;
+//             }
+//             for (int i = K + 1; i < heights.length; i++) {
+//                 if (heights[i] > heights[index]) {
+//                     break;
+//                 } else if (heights[i] < heights[index]) {
+//                     index = i;
+//                 }
+//             }
+//             if (index == 0) {
+//                 V--;
+//                 continue;
+//             }
+//             heights[index]++;
+//             V--;
+//         }
+//         return heights;
+//     }
 
 
 
     // Follow up, what if the boundary is small
-class Solution {
+class PourWater {
   public void pourWater(int[] heights, int water, int location) {
     int n = heights.length;
-    int[] h = new int[n + 2];
+    int[] h = new int[n];
     for (int i = 0; i < n; i++) {
-      h[i + 1] = heights[i];
+      h[i] = heights[i];
     }
-    int[] waters = new int[n + 2];
-    waters[0] = -1;
-    waters[n + 1] = -1;
+    int[] waters = new int[n];
     while(water > 0) {
-      boolean goLeft = false;
-      int idx = location + 1;
+      water--;
+      int idx = location;
       // For Loop 比较好
-      for (int i = location; i >= 0; i--) {
+      for (int i = location - 1; i >= 0; i--) {
         //记住 是和中间比
         if (waters[i] + h[i] > waters[idx] + h[idx]) {
           break;
-        } else if (waters[i] + h[i] < waters[idx] + h[idx]) {
+        } else if (waters[i] + h[i] <= waters[idx] + h[idx]) {
           idx = i;
         }
       }
-      if (idx != location + 1) {
+      if (idx == 0) {
+          continue;
+      } else if (idx != location) {
         waters[idx]++;
-        water--;
         continue;
       }
 
-      for (int i = location + 2; i < n + 1; i++) {
+      for (int i = location + 1; i < n; i++) {
         if (waters[i] + h[i] > waters[idx] + h[idx]) {
           break;
-        } else if (waters[i] + h[i] < waters[idx] + h[idx]) {
+        } else if (waters[i] + h[i] <= waters[idx] + h[idx]) {
           idx = i;
         }
       }
-      waters[idx]++;
-      water--;
-      waters[0] = -1;
-      waters[n + 1] = -1;
+
+      if (idx == n - 1) {
+          continue;
+      } else {
+          waters[idx]++;
+      }
     }
 
     print(h, waters);
@@ -102,8 +112,8 @@ class Solution {
   }
 
   public static void main(String args[]) {
-    int[] heights = new int[]{4,1,3,5};
-    Solution s = new Solution();
+    int[] heights = new int[]{4,1,3,1,2};
+    PourWater s = new PourWater();
     int[] waters = new int[heights.length];
     s.pourWater(heights, 5, 2);
   }
