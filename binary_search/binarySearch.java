@@ -22,10 +22,12 @@ public class binarySearch {
             }  else
                 l = mid + 1;
         }
-        return l;
+        // return l;
+        return l < A.length && A[l] >= target ? l : -1;
     }
 
     //the way to find firstGreater
+    //这个方法有个bug就是当整个array 丢不存在满足要求的时候 会返回 最后一个元素, ，array size是1的时候，例如【4】 target 5， find firstGreater than 5 should return -1
     public int search3(int[] A, int target) {
         int l = 0, r = A.length-1, ans = 0;
         while (l < r) {
@@ -35,7 +37,10 @@ public class binarySearch {
             }  else
                 l = mid + 1;
         }
-        return l;
+        // return l;
+        //Without bug implementation:
+        //Simply doing A[l] would lead to out of range if A is empty
+        return l < A.length && A[l] > target ? l : -1;
     }
     //cannot do mid - 1 and mid, which gonna be infinite loop
     //

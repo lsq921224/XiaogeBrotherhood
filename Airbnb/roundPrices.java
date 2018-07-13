@@ -31,7 +31,7 @@ public class roundPrices {
      }
 
      public static void main(String args[]) {
-         double[] a = {1.2, 2.3, 3.4};
+         double[] a = {1.0, 2.0, 3.0};
          roundPrices t = new roundPrices();
          for (int b : t.roundUp(a)) {
              System.out.println(b);

@@ -10,6 +10,7 @@ class Solution {
     }
 
     boolean dfs(String row, String nextRow, Map<String, Set<Character>> allowed, int start) {
+        // don't forget this line
         if (row.length() == 1) return true;
         if (nextRow.length() + 1 == row.length())
             return bfs(nextRow, "", allowed, 1);

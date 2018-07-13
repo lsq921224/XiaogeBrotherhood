@@ -54,6 +54,7 @@ public class Solution {
 				//if you already sell at i - 1 for all your chance, you could have sold at i by extending your last txn
 				//if you still have one transaction left, why not sell at last day.
 				localMax[i][j] = Math.max(localMax[i - 1][j], globalMax[i - 1][j - 1]) + diff;
+				//should be globalMax[i - 1][j - 1] not localMax[i - 1][j - 1]; Pay attention to this.
 				globalMax[i][j] = Math.max(localMax[i][j], globalMax[i - 1][j]);
 			}
 		}

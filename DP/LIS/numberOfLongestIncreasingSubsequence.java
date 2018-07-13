@@ -1,4 +1,5 @@
 class Solution {
+    //LIS 是多长 这个问题是有几个
     public int findNumberOfLIS(int[] nums) {
         if (nums.length <= 1) return nums.length;
         int[] dp = new int[nums.length];

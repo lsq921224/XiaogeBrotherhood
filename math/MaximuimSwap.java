@@ -14,11 +14,13 @@ class Solution {
             last[A[i] - '0'] = i;// this idea is important
         }
         for (int j = 0; j < A.length; j++) {
-            for (int i = 9; i >= A[j] - '0'; i--) { // i >=0 is not good, swap only need a larger number
+            //只能比较比当前j位还大的数
+            //i >= can't be equal, otherwise would fail on 98368
+            for (int i = 9; i > A[j] - '0'; i--) { // i >=0 is not good, swap only need a larger number
                 if (last[i] > j){
-                    char tmp = A[i];
-                    A[i] = A[last[d]];
-                    A[last[d]] = tmp;
+                    char tmp = A[j];
+                    A[j] = A[last[i]];
+                    A[last[i]] = tmp;
                     return Integer.valueOf(new String(A));
                 }
             }

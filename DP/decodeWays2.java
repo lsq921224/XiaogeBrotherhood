@@ -20,7 +20,7 @@ class Solution {
                 // cannot count 10 like 103, it's the same ways
                 if (s.charAt(i + 1) == '*') memo[i] = 9 * memo[i+1] + 15 * memo[i+2];
                 else if (s.charAt(i + 1) <= '6') memo[i] = 9 * memo[i+1] + 2 * memo[i+2];
-                else memo[i] = 9 * memo[i+1] + memo[i+2];
+                else memo[i] = 9 * memo[i+1] + memo[i+2];// only the one with 17
             }
             // 1*2
             else if (s.charAt(i + 1) == '*') {

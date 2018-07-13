@@ -45,5 +45,8 @@ public class MinimumVerticesToTraverseDirectedGraph {
         //3->2->1->0 0->1 3->1
         e =  new int[][]{{0, 1}, {1, 0}, {2, 1}, {3, 1}, {3, 2}};
         for (int i : t.getMin(e, 4)) System.out.println(i); //3
+
+        e =  new int[][]{{0, 3}, {1, 0}, {2, 1}, {2, 4}, {3, 2}};
+        for (int i : t.getMin(e, 5)) System.out.println(i); //3
     }
 }

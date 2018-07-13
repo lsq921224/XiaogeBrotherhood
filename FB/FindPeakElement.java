@@ -5,6 +5,7 @@ public class Solution {
 
         while(left <right){
             int mid = left + (right-left)/2;
+            //mid > 0 dont forget
             if(mid>0 && A[mid]<A[mid-1]){
                 right = mid;
             }

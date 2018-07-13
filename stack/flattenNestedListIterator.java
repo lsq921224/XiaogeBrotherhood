@@ -22,6 +22,7 @@ public class NestedIterator implements Iterator<Integer> {
     }
 
     private void flattenList(List<NestedInteger> list) {
+        //from end to start
         for (int i = list.size() - 1; i >= 0; i--) {
             stack.push(list.get(i));
         }

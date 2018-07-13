@@ -12,6 +12,7 @@ public int largestRectangleArea(int[] heights) {
         }
         stack.push(i);
     }
+    // Have to be a while loop to go through all cases like [2, 3]
     while(stack.peek() != -1) {
         max = Math.max(max, heights[stack.pop()] * (heights.length - stack.peek() - 1));
     }

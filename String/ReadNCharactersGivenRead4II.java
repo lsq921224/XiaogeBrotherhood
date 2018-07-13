@@ -34,4 +34,21 @@ public class Solution extends Reader4 {
       }
       return ptr;
   }
+
+  //my better solution
+private int bufPtr = 4;
+private int bufCnt = 0;
+private char[] buff = new char[4];
+public int read(char[] buf, int n) {
+    int ptr = 0;
+    while(ptr < n) {
+        if (bufPtr == 4) {
+            bufCnt = read4(buff);
+            bufPtr = 0;
+        }
+        if (bufPtr >= bufCnt) break; //check the case when not enough result return
+        buf[ptr++] = buff[bufPtr++];
+    }
+    return ptr;
+}
 }

@@ -46,8 +46,10 @@ public class KEditDistance {
         for (char c : root.map.keySet()) {
             TrieNode node = root.map.get(c);
             int[] currDist = new int[target.length() + 1];
-            currDist[0] = target.length() + 1;
+            // this is s.length() + 1 as the example showed above
+            currDist[0] = s.length() + 1;
             for (int j = 0; j < target.length(); j++) {
+                // don't out of bound
                 if (c == target.charAt(j)) {
                     currDist[j + 1] = prevDist[j];
                 } else {

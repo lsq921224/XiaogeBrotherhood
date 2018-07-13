@@ -34,7 +34,7 @@ public class Solution {
     public int change(int M, int[] A) {
         // write your code here
         if(M == 0) {
-            return 0;
+            return 1;
         }
         int[] dp = new int[M + 1];
         dp[0] = 1;

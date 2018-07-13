@@ -24,6 +24,7 @@ class LCAofDeepestLeafNode {
         }
         int left = postOrder(root.left, depth + 1);
         int right = postOrder(root.right, depth + 1);
+        // this equal sign here is important
         if(left == right && left >= maxDepth){
             curLCA = root;
         }

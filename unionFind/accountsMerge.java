@@ -15,6 +15,7 @@ class Solution {
             String p = find(account.get(1), parents);
             for (int i = 2; i < account.size(); i++) {
                 //this p has to be the last one, since there is only one parent, not only severial parents
+                // THIS HAS TO BE THE FIND!!!!! OTHERWISE IT WOULD OVERWRITE THE HASH OF CURR, and lose the connection between current and the 1-indx element
                 parents.put(find(account.get(i), parents), p);
             }
         }

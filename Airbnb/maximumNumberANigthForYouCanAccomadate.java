@@ -1,5 +1,5 @@
 import java.util.*;
-public class maximumNumberANigthForYouCanAccomadate {
+    public class maximumNumberANigthForYouCanAccomadate {
     public int rob(int[] nums) {
         int[] result = new int[nums.length];
         int[] path = new int[nums.length];

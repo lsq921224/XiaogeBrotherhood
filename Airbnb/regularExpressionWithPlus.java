@@ -4,7 +4,7 @@ public class regularExpressionWithPlus{
         dp[s.length()][p.length()] = true; // this is important
 
         for(int i = s.length(); i >= 0; i --) { // starts from the length, to match to the end of string
-            // starts from p - 1, otherwise firstMatch will fail
+            // starts from p - 1, otherwise firstMatch will fail on case (aa a*)
             for (int j = p.length() - 1; j >= 0; j--) {
                 boolean firstMatch = i < s.length() && (s.charAt(i) == p.charAt(j) || p.charAt(j) == '.');
                 if (j < p.length() - 1 && p.charAt(j + 1) == '*') {
@@ -35,7 +35,7 @@ public class regularExpressionWithPlus{
 
     public static void main(String args[]) {
         regularExpressionWithPlus test = new regularExpressionWithPlus();
-        System.out.println(test.isMatch("abbc", "ab+c"));
+        System.out.println(test.isMatch("abbc", "a.+c"));
         System.out.println(test.isMatch("abc", "ab+c"));
         System.out.println(test.isMatch("ac", "ab+c"));
         System.out.println(test.isMatch("abc", "ab+"));

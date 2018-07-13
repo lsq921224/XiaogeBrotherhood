@@ -15,68 +15,66 @@
 //     }
 //     return result;
 // }
-import java.util.*;
-
-class employeeFreeTime {
-  static class Point {
-    int flag;
-    int time;
-    public Point(int time, int flag) {
-      this.flag = flag;
-      this.time = time;
-    }
+class Interval {
+  int start;
+  int end;
+  Interval(int s, int e) {
+    start = s;
+    end = e;
   }
+}
 
-  static class Interval {
-    int start;
-    int end;
-    public Interval(int s, int e) {
-      this.start = s;
-      this.end = e;
-    }
+class Time {
+  int flag;
+  int time;
+  Time(int f, int t) {
+    flag = f;
+    time = t;
   }
+}
+
+class Solution {
+
   public List<Interval> getAvailableIntervals(List<List<Interval>> intervals, int k) {
-    int m = intervals.size();
-    List<Point> l = new ArrayList<>();
-    for (int i = 0; i < m; i++) {
-      for (Interval iv : intervals.get(i)) {
-        l.add(new Point(iv.start, 1));
-        l.add(new Point(iv.end, -1));
+    List<Time> list = new ArrayList<>();
+    List<Interval> res= new ArrayList<>();
+    for (List<Interval> l : intervals) {
+      for (Interval i : l) {
+        list.add(new Time(1, i.start));
+        list.add(new Time(-1, i.end));
       }
     }
 
-    Collections.sort(l, (Point p1, Point p2) -> {
-      if (p1.time == p2.time) return p1.flag - p2.flag;
-      // have to sort flag too, when and do end time first and start time, (1, 3) (3, 4), it would consider end time first
-      else return p1.time - p2.time;
+    Collections.sort(list, (t1, t2)-> {
+      if (t1.time == t2.time) return t1.flag - t2.flag;
+      else return t1.time - t2.time;
     });
     int count = 0;
-    int start = Integer.MAX_VALUE;
-    int end = -1;
-    List<Interval> res = new ArrayList<Interval>();
-    for (int i = 0; i < l.size(); i++) {
-      if (l.get(i).flag == 1) {
+    int start = -1;
+    for (int i = 0; i < list.size(); i++) {
+      Time curr = list.get(i);
+      if (curr.flag == 1)  {
         count++;
       } else {
         count--;
       }
-      if (count <= m - k) {
-        start = Math.min(start, l.get(i).time);
-      } else if (start != Integer.MAX_VALUE) {
-        end = l.get(i).time;
-        if (start != end)
-          res.add(new Interval(start, end));
-        start = Integer.MAX_VALUE;
-        end = -1;
+      if (intervals.size() - count >= k) {
+        if (start == -1) start = curr.time;
+      } else {
+        if (start != -1 && start != curr.time) {
+          res.add(new Interval(start, curr.time));
+          start = -1;
+        }
       }
     }
-    if (start != Integer.MAX_VALUE && start != l.get(l.size() - 1).time) {
-      res.add(new Interval(start, l.get(l.size() - 1).time));
+    if (start != -1 && start != list.get(list.size() - 1).time) {
+      res.add(new Interval(start, list.get(list.size() - 1).time));
     }
     return res;
   }
 
   public static void main(String[] args) {
+    Solution s = new Solution();
     List<List<Interval>> intervals = new ArrayList<>();
     Interval i1 = new Interval(3, 4);
     Interval i2 = new Interval(6, 7);
@@ -97,13 +95,10 @@ class employeeFreeTime {
     tmp2.add(i5);
     intervals.add(tmp2);
 
-    employeeFreeTime s = new employeeFreeTime();
-    for (Interval i : s.getAvailableIntervals(intervals, 3)) {
+    for (Interval i : s.getAvailableIntervals(intervals, 2)) {
       System.out.print(i.start);
       System.out.print(",");
       System.out.println(i.end);
     }
-
   }
-
 }

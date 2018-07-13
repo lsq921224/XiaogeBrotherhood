@@ -1,3 +1,5 @@
+//As long as you have different numbers of people on your left and on your right, moving a little to the side with more people decreases the sum of distances.
+// So to minimize it, you must have equally many people on your left and on your right.
 public class Solution {
     public int minTotalDistance(int[][] grid) {
         int m = grid.length, n = grid[0].length;

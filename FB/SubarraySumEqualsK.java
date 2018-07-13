@@ -2,6 +2,7 @@ public class Solution {
     public int subarraySum(int[] nums, int k) {
         int sum = 0, result = 0;
         Map<Integer, Integer> preSum = new HashMap<>();
+        // Initial condition here is important
         preSum.put(0, 1);
 
         for (int i = 0; i < nums.length; i++) {
