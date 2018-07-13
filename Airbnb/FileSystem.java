@@ -1,9 +1,16 @@
+//Follow Up add Locks
+class MyRunnableTask implements Runnable {
+   public void run() {
+     System.out.println("HIHI1");
+   }
+}
 public class Solution {
     Map<String, Integer> pathMap;
     Map<String, Runnable> callbackMap;
     public Solution() {
         this.pathMap = new HashMap<>();
         this.callbackMap = new HashMap<>();
+        //Inserting the initial is important since the create is using last index which could be empty substring
         this.pathMap.put("", 0);
     }
     public boolean create(String path, int value) {
@@ -42,5 +49,18 @@ public class Solution {
         }
         callbackMap.put(path, callback);
         return true;
+    }
+    public static void main(String[] args) {
+      Solution s = new Solution();
+      s.create("/a", 1);
+      s.create("/a/b", 2);
+      s.create("/a/b/c", 3);
+      System.out.println(s.get("/a/b/c"));
+      System.out.println(s.set("/a/b", 4));
+      System.out.println(s.watch("/a/b", new MyRunnableTask()));
+      System.out.println(s.watch("/a", new MyRunnableTask()));
+      System.out.println(s.set("/a/b/c", 5));
+      System.out.println(s.get("/a/b/c"));
+      System.out.println(s.get("/a/b"));
     }
 }

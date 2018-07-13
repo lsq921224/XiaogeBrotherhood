@@ -26,6 +26,7 @@ class moveZeroes {
         while (left < right) {
             while (left < right && nums[left] != 0)		left++;
             while (left < right && nums[right] == 0)	right--;
+            
             if (left < right)	swap(nums, left++, right--);
         }
         return left;

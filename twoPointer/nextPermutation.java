@@ -9,12 +9,15 @@
 // 3,2,1 → 1,2,3
 // 1,1,5 → 1,5,1
 
+
+//Complexity O(N)
 public class Solution {
     public void nextPermutation(int[] nums) {
         int i = nums.length - 2;
         while (i >= 0 && nums[i + 1] <= nums[i]) {
             i--;
         }
+        //this if condition is very important to prevent from checking the last one
         if (i >= 0) {
             int j = nums.length - 1;
             while (j >= 0 && nums[j] <= nums[i]) {

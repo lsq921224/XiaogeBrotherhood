@@ -21,6 +21,7 @@ public int orderOfLargestPlusSign(int N, int[][] mines) {
 
     for (int i = 0; i < N; i++) {
         for (int j = 0, k = N - 1, l = 0, r = 0, u = 0, d = 0; j < N; j++, k--) {
+            //overwrite the array as the len from the four corner
             grid[i][j] = Math.min(grid[i][j], l = (grid[i][j] == 0 ? 0 : l + 1));
             grid[i][k] = Math.min(grid[i][k], r = (grid[i][k] == 0 ? 0 : r + 1));
             grid[j][i] = Math.min(grid[j][i], u = (grid[j][i] == 0 ? 0 : u + 1));

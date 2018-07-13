@@ -51,4 +51,35 @@ class Solution {
         return (right != null) ? right : root;
       }
     }
+
+
+    //Followup if there is a parent node
+//     2. TreeNode有parent引用：
+//
+// Pseudocode
+//    if n has a right subtree
+// 	return leftmost child of right subtree
+//    else
+// 	while n is a right child of n.parent
+//          n = n.parent  // go northwest till end
+// 	return n.parent // return 1st northeast node
+
+public TreeNode inOrderSuccessor(TreeNode n) {
+	if (n == null)	return null;
+	if (n.right != null)
+          return leftMostChild(n.right);
+	else {
+	    TreeNode cur = n, p = n.parent;
+	    while (p != null && p.left != cur) {
+            cur = p;
+            p = p.parent;
+	    }
+	    return p;
+      }
+}
+private TreeNode leftMostChild(TreeNode node) {
+    while (node.left != null)
+        node = node.left;
+    return node;
+}
 }

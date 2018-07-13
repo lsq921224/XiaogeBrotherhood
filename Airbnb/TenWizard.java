@@ -15,6 +15,7 @@ public class TenWizard {
         Map<Integer, Wizard> map = new HashMap<>();
         int[] parent = new int[n];
         for (int i = 0; i < n; i++) {
+            // do this way is better than skip 0 here, since Dijkstra can handle cycle, 0 could be a cycle point, so all nodes should exist in the map
             map.put(i, new Wizard(i, i == 0 ? 0 : Integer.MAX_VALUE));
         }
         Queue<Wizard> pq = new PriorityQueue<Wizard>(n);
@@ -23,9 +24,9 @@ public class TenWizard {
             Wizard curr = pq.poll();
             for (int f : wizards.get(curr.id)) {
                 Wizard next = map.get(f);
+
                 int w = (next.id - curr.id) * (next.id - curr.id);
                 if (next.dist > curr.dist + w) {
-                    pq.remove(next);
                     next.dist = curr.dist + w;
                     pq.offer(next);
                     parent[next.id] = curr.id;

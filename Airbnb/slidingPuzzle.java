@@ -61,6 +61,24 @@ class SlidingPuzzle {
             x = i;
             y = j;
         }
+
+        int getScore() {
+            int count = 0;
+            int n = matrix.length;
+            int m = matrix[0].length;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    int num = i * m + j + 1;
+                    if (i == n - 1 && j == m - 1) {
+                        num = 0;
+                    }
+                    if (num == matrix[i][j]) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
     }
     int[] dx = {-1, 1, 0, 0};
     int[] dy = {0, 0, 1, -1};
@@ -80,7 +98,7 @@ class SlidingPuzzle {
 
         Status initial = new Status(matrix, startX, startY);
         Status finals = new Status(finalMatrix, n - 1, m - 1);
-        Queue<Status> queue = new LinkedList<>();
+        Queue<Status> queue = new PriorityQueue<>((s1, s2) -> s2.getScore() - s1.getScore());
         queue.add(initial);
         Set<String> visited = new HashSet<>();
         visited.add(initial.encodeMatrix());
@@ -94,10 +112,12 @@ class SlidingPuzzle {
                 if (x < 0 || x >= n || y < 0 || y >= m)
                     continue;
                 current.move(x, y);
-                if (current.encodeMatrix().equals(finals.encodeMatrix()))
+                String encoded = current.encodeMatrix();
+                if (encoded.equals(finals.encodeMatrix()))
                     return true;
-                if (!visited.contains(current.encodeMatrix())) {
-                    visited.add(current.encodeMatrix());
+                if (!visited.contains(encoded)) {
+                    System.out.println(encoded);
+                    visited.add(encoded);
                     queue.add(new Status(current.matrix, current.x, current.y));
                 }
                 current.move(xx, yy);
@@ -153,7 +173,14 @@ public boolean isSolvable(int[][] puzzle)
 
         public final static void main(String[] args) {
             SlidingPuzzle sg = new SlidingPuzzle();
-            int[][] matrix = new int[][]{{3, 9, 1, 15}, {14, 11, 4, 6}, {13, 0, 10, 12}, {7, 2, 8, 5}};
+            int puzzle[][] = {
+                    {1,5,4},
+                    {2, 3, 8},
+                    {0, 6, 7},
+                };
+
+
+            int[][] matrix = new int[][]{{0, 5, 3, 2, 1}, {9, 4, 8, 7, 6}};
             System.out.println(sg.canSolve(matrix));
         }
 

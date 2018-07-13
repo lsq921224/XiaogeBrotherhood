@@ -7,14 +7,10 @@ Solution {
             f[i] = 1;
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
-                    f[i] = Math.max(f[i], f[j]);
+                    f[i] = Math.max(f[i], f[j] + 1);
                 }
             }
-            //len is +1
-            f[i]++;
-            if (f[i] > max) {
-                max = f[i];
-            }
+            max = Math.max(max, f[i]);
         }
         return max;
     }

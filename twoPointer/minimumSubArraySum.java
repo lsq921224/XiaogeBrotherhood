@@ -16,9 +16,8 @@ public class Solution {
                 sum += nums[j];
                 j ++;
             }
-            if(sum >=s) {
-                ans = Math.min(ans, j - i);
-            }
+            // cant use condition j >= nums.length here since both the condition in while loop could happen
+            if(sum >=s) ans = Math.min(ans, j - i);
             sum -= nums[i];
         }
         if(ans == Integer.MAX_VALUE)

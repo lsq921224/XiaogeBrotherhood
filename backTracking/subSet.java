@@ -45,11 +45,13 @@ class Solution {
   private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int start){
       list.add(new ArrayList<>(tempList));
       for(int i = start; i < nums.length; i++){
-        // 太关键了 especailly i > start 这样就会考虑一次[1,2,2]， 而不会重复[1,2]
-          if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
+        // // 太关键了 especailly i > start 这样就会考虑一次[1,2,2]， 而不会重复[1,2]
+        //   if(i > start && nums[i] == nums[i-1]) continue; // skip duplicates
           tempList.add(nums[i]);
           backtrack(list, tempList, nums, i + 1);
           tempList.remove(tempList.size() - 1);
+          // this is for skipping the duplicate result finally
+          while(i < nums.length - 1 && nums[i] == nums[i + 1]) i++;
       }
   }
 }

@@ -105,6 +105,7 @@ class Solution {
               }
           }
           map.put(c, i);
+          //don't forget this
         times++;
       }
     return times;

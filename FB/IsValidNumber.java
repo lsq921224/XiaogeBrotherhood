@@ -17,12 +17,15 @@ public class Solution {
             i++;
             while(i<len && Character.isDigit(ch[i])) {
                 i++;
+                // have to setup in here for the single .
                 number = true;
             }
         }
+        // has to be a number before you have e
         if(number && i<len && ch[i]=='e'){
             i++;
             number = false;
+            // sign might be shown up after e
             if(i<len && (ch[i]=='-' || ch[i]=='+')) i++;
             while(i<len && Character.isDigit(ch[i])) {
                 i++;

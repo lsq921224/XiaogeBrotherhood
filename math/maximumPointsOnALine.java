@@ -8,7 +8,7 @@ public class Solution {
             int samePoint = 1;
             int localMax = 0;
             HashMap<Double, Integer> map = new HashMap<Double, Integer>()
-            for(int j = i - 1; j >= 0; j- ){
+            for(int j = i - 1; j >= 0; j-- ){
                 Point p2 = points[j];
                 double slope = 0.0;
                 if(p1.y == p2.y && p1.x == p2.x) {
